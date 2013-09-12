@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EDD1DFCC-5434-4282-8A4F-25AD1791ED42}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MonoMinion</RootNamespace>
+    <AssemblyName>MonoMinion</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;WINDOWS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>
+    </ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Collision\SATShape.cs" />
+    <Compile Include="Components\Calendar.cs" />
+    <Compile Include="Components\FrameRateCounter.cs" />
+    <Compile Include="Components\TimerComponent.cs" />
+    <Compile Include="Handlers\GamepadHandler.cs" />
+    <Compile Include="IsoCubeEngine\Cube.cs" />
+    <Compile Include="IsoCubeEngine\CubeMap.cs" />
+    <Compile Include="IsoCubeEngine\CubeScenery.cs" />
+    <Compile Include="IsoCubeEngine\MapCube.cs" />
+    <Compile Include="IsoCubeEngine\SceneryCube.cs" />
+    <Compile Include="Minion.cs" />
+    <Compile Include="Graphics\Camera2D.cs" />
+    <Compile Include="Graphics\SpriteSheet.cs" />
+    <Compile Include="Graphics\SpriteSheetManager.cs" />
+    <Compile Include="Graphics\Sprites\Sprite.cs" />
+    <Compile Include="Graphics\Sprites\SpriteAnimation.cs" />
+    <Compile Include="Graphics\TileSheet.cs" />
+    <Compile Include="Graphics\TileSheetManager.cs" />
+    <Compile Include="GUI\Control.cs" />
+    <Compile Include="GUI\ControlManager.cs" />
+    <Compile Include="GUI\Controls\DropContainer.cs" />
+    <Compile Include="GUI\Controls\ImageBox.cs" />
+    <Compile Include="GUI\Controls\ImageButton.cs" />
+    <Compile Include="GUI\Controls\Label.cs" />
+    <Compile Include="GUI\Controls\LabelButton.cs" />
+    <Compile Include="GUI\Controls\Panel.cs" />
+    <Compile Include="GUI\Controls\ScrollList.cs" />
+    <Compile Include="Handlers\KeyboardHandler.cs" />
+    <Compile Include="Handlers\MouseHandler.cs" />
+    <Compile Include="Helpers\CollisionHelper.cs" />
+    <Compile Include="Helpers\DrawingHelper.cs" />
+    <Compile Include="Helpers\PathfinderHelper.cs" />
+    <Compile Include="Helpers\PathNodeBinaryHeap.cs" />
+    <Compile Include="Helpers\RollingAverage.cs" />
+    <Compile Include="PhysicsEngine\Data\RigidBody.cs" />
+    <Compile Include="PhysicsEngine\Data\CollisionManifold.cs" />
+    <Compile Include="PhysicsEngine\Data\PhysicsMass.cs" />
+    <Compile Include="PhysicsEngine\Data\PhysicsMaterial.cs" />
+    <Compile Include="PhysicsEngine\Physics.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScreenManager\Entity.cs" />
+    <Compile Include="ScreenManager\GameManager.cs" />
+    <Compile Include="ScreenManager\GameScreen.cs" />
+    <Compile Include="TileEngine\MapLayer.cs" />
+    <Compile Include="TileEngine\Tile.cs" />
+    <Compile Include="TileEngine\TileMap.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Tao.Sdl, Version=1.2.13.0, Culture=neutral, PublicKeyToken=9c7a200e36c0094e, processorArchitecture=MSIL" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\..\GitHub\MonoGame\MonoGame.Framework\MonoGame.Framework.Windows.csproj">
+      <Project>{7de47032-a904-4c29-bd22-2d235e8d91ba}</Project>
+      <Name>MonoGame.Framework.Windows</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
