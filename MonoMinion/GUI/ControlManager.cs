@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 using MonoMinion.Helpers;
-using MonoMinion.Handlers;
+using MonoMinion.Input.Handlers;
 
 namespace MonoMinion.GUI
 {

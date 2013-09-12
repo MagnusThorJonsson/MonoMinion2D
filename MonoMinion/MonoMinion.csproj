@@ -43,7 +43,11 @@
     <Compile Include="Components\Calendar.cs" />
     <Compile Include="Components\FrameRateCounter.cs" />
     <Compile Include="Components\TimerComponent.cs" />
-    <Compile Include="Handlers\GamepadHandler.cs" />
+    <Compile Include="Input\enums\InputButtonState.cs" />
+    <Compile Include="Input\enums\InputDeviceType.cs" />
+    <Compile Include="Input\InputAction.cs" />
+    <Compile Include="Input\InputMapper.cs" />
+    <Compile Include="Input\Handlers\GamepadHandler.cs" />
     <Compile Include="IsoCubeEngine\Cube.cs" />
     <Compile Include="IsoCubeEngine\CubeMap.cs" />
     <Compile Include="IsoCubeEngine\CubeScenery.cs" />
@@ -66,8 +70,8 @@
     <Compile Include="GUI\Controls\LabelButton.cs" />
     <Compile Include="GUI\Controls\Panel.cs" />
     <Compile Include="GUI\Controls\ScrollList.cs" />
-    <Compile Include="Handlers\KeyboardHandler.cs" />
-    <Compile Include="Handlers\MouseHandler.cs" />
+    <Compile Include="Input\Handlers\KeyboardHandler.cs" />
+    <Compile Include="Input\Handlers\MouseHandler.cs" />
     <Compile Include="Helpers\CollisionHelper.cs" />
     <Compile Include="Helpers\DrawingHelper.cs" />
     <Compile Include="Helpers\PathfinderHelper.cs" />

@@ -3,7 +3,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-using MonoMinion.Handlers;
+using MonoMinion.Input.Handlers;
 
 namespace MonoMinion.GUI.Controls
 {

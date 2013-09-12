@@ -1,7 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using MonoMinion.Input.enums;
 
-namespace MonoMinion.Handlers
+namespace MonoMinion.Input.Handlers
 {
     /// <summary>
     /// Input Handler Component
@@ -79,6 +80,32 @@ namespace MonoMinion.Handlers
         public static bool KeyDown(Keys key)
         {
             return _keyboardState.IsKeyDown(key);
+        }
+
+        /// <summary>
+        /// Gets the button state for a specific Keyboard button
+        /// </summary>
+        /// <param name="key">The Keyboard button to check</param>
+        /// <returns>The current Keyboard button state</returns>
+        public static InputButtonState GetKeyState(Keys key)
+        {
+            if (_keyboardState.IsKeyDown(key) &&
+                _lastKeyboardState.IsKeyUp(key))
+            {
+                return InputButtonState.Clicked;
+            }
+            else if (_keyboardState.IsKeyDown(key) &&
+                _lastKeyboardState.IsKeyDown(key))
+            {
+                return InputButtonState.Held;
+            }
+            else if (_keyboardState.IsKeyUp(key) &&
+                _lastKeyboardState.IsKeyDown(key))
+            {
+                return InputButtonState.Released;
+            }
+
+            return InputButtonState.None;
         }
         #endregion
     }

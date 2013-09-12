@@ -1,26 +1,17 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using MonoMinion.Input.enums;
 using System;
 using System.Collections.Generic;
 
-namespace MonoMinion.Handlers
+namespace MonoMinion.Input.Handlers
 {
-    /// <summary>
-    /// Contains the available gamepad button states
-    /// </summary>
-    public enum GamePadButtonState
-    {
-        None,
-        Clicked,
-        Held,
-        Released
-    }
-
     /// <summary>
     /// A simple and generic gamepad handler
     /// </summary>
     public class GamepadHandler
     {
+        #region Variables & Properties
         // Setup
         protected PlayerIndex player;
         public PlayerIndex Player { get { return player; } }
@@ -33,54 +24,57 @@ namespace MonoMinion.Handlers
         // Thumbstick
         public Vector2 LThumb { get { return currentState.ThumbSticks.Left; } }
         public Vector2 RThumb { get { return currentState.ThumbSticks.Right; } }
-        protected GamePadButtonState thumb_Left;
-        public GamePadButtonState LThumbButton { get { return thumb_Left; } }
-        protected GamePadButtonState thumb_Right;
-        public GamePadButtonState RThumbButton { get { return thumb_Right; } }
+        protected InputButtonState thumb_Left;
+        public InputButtonState LThumbButton { get { return thumb_Left; } }
+        protected InputButtonState thumb_Right;
+        public InputButtonState RThumbButton { get { return thumb_Right; } }
 
         // Triggers
         public float LTrigger { get { return currentState.Triggers.Left; } }
         public float RTrigger { get { return currentState.Triggers.Right; } }
 
-        protected GamePadButtonState trigger_Left;
-        public GamePadButtonState LTriggerButton { get { return trigger_Left; } }
-        protected GamePadButtonState trigger_Right;
-        public GamePadButtonState RTriggerButton { get { return trigger_Right; } }
+        protected InputButtonState trigger_Left;
+        public InputButtonState LTriggerButton { get { return trigger_Left; } }
+        protected InputButtonState trigger_Right;
+        public InputButtonState RTriggerButton { get { return trigger_Right; } }
 
         // Buttons - Shoulders
-        protected GamePadButtonState shoulder_Left;
-        public GamePadButtonState LShoulder { get { return shoulder_Left; } }
-        protected GamePadButtonState shoulder_Right;
-        public GamePadButtonState RShoulder { get { return shoulder_Right; } }
+        protected InputButtonState shoulder_Left;
+        public InputButtonState LShoulder { get { return shoulder_Left; } }
+        protected InputButtonState shoulder_Right;
+        public InputButtonState RShoulder { get { return shoulder_Right; } }
 
         // Buttons - Action
-        protected GamePadButtonState button_A;
-        public GamePadButtonState A { get { return button_A; } }
-        protected GamePadButtonState button_B;
-        public GamePadButtonState B { get { return button_B; } }
-        protected GamePadButtonState button_X;
-        public GamePadButtonState X { get { return button_X; } }
-        protected GamePadButtonState button_Y;
-        public GamePadButtonState Y { get { return button_Y; } }
+        protected InputButtonState button_A;
+        public InputButtonState A { get { return button_A; } }
+        protected InputButtonState button_B;
+        public InputButtonState B { get { return button_B; } }
+        protected InputButtonState button_X;
+        public InputButtonState X { get { return button_X; } }
+        protected InputButtonState button_Y;
+        public InputButtonState Y { get { return button_Y; } }
         
         // Buttons - Control
-        protected GamePadButtonState button_Select;
-        public GamePadButtonState Select { get { return button_Select; } }
-        protected GamePadButtonState button_Start;
-        public GamePadButtonState Start { get { return button_Start; } }
-        protected GamePadButtonState button_Guide;
-        public GamePadButtonState Guide { get { return button_Guide; } }
+        protected InputButtonState button_Select;
+        public InputButtonState Select { get { return button_Select; } }
+        protected InputButtonState button_Start;
+        public InputButtonState Start { get { return button_Start; } }
+        protected InputButtonState button_Guide;
+        public InputButtonState Guide { get { return button_Guide; } }
         
         // D-Pad
-        protected GamePadButtonState dpad_Up;
-        public GamePadButtonState Up { get { return dpad_Up; } }
-        protected GamePadButtonState dpad_Down;
-        public GamePadButtonState Down { get { return dpad_Down; } }
-        protected GamePadButtonState dpad_Left;
-        public GamePadButtonState Left { get { return dpad_Left; } }
-        protected GamePadButtonState dpad_Right;
-        public GamePadButtonState Right { get { return dpad_Right; } }
+        protected InputButtonState dpad_Up;
+        public InputButtonState Up { get { return dpad_Up; } }
+        protected InputButtonState dpad_Down;
+        public InputButtonState Down { get { return dpad_Down; } }
+        protected InputButtonState dpad_Left;
+        public InputButtonState Left { get { return dpad_Left; } }
+        protected InputButtonState dpad_Right;
+        public InputButtonState Right { get { return dpad_Right; } }
+        #endregion
 
+
+        #region Main (Constructor, Update, etc)
         /// <summary>
         /// GamepadHandler constructor
         /// </summary>
@@ -108,22 +102,22 @@ namespace MonoMinion.Handlers
                 if (currentState.Buttons.LeftShoulder == ButtonState.Released &&
                     previousState.Buttons.LeftShoulder == ButtonState.Released)
                 {
-                    shoulder_Left = GamePadButtonState.None;
+                    shoulder_Left = InputButtonState.None;
                 }
                 else if (currentState.Buttons.LeftShoulder == ButtonState.Pressed &&
                     previousState.Buttons.LeftShoulder == ButtonState.Released)
                 {
-                    shoulder_Left = GamePadButtonState.Clicked;
+                    shoulder_Left = InputButtonState.Clicked;
                 }
                 else if (currentState.Buttons.LeftShoulder == ButtonState.Pressed &&
                     previousState.Buttons.LeftShoulder == ButtonState.Pressed)
                 {
-                    shoulder_Left = GamePadButtonState.Held;
+                    shoulder_Left = InputButtonState.Held;
                 }
                 else if (currentState.Buttons.LeftShoulder == ButtonState.Released &&
                     previousState.Buttons.LeftShoulder == ButtonState.Pressed)
                 {
-                    shoulder_Left = GamePadButtonState.Released;
+                    shoulder_Left = InputButtonState.Released;
                 }
                 #endregion
 
@@ -131,22 +125,22 @@ namespace MonoMinion.Handlers
                 if (currentState.Buttons.RightShoulder == ButtonState.Released &&
                     previousState.Buttons.RightShoulder == ButtonState.Released)
                 {
-                    shoulder_Right = GamePadButtonState.None;
+                    shoulder_Right = InputButtonState.None;
                 }
                 else if (currentState.Buttons.RightShoulder == ButtonState.Pressed &&
                     previousState.Buttons.RightShoulder == ButtonState.Released)
                 {
-                    shoulder_Right = GamePadButtonState.Clicked;
+                    shoulder_Right = InputButtonState.Clicked;
                 }
                 else if (currentState.Buttons.RightShoulder == ButtonState.Pressed &&
                     previousState.Buttons.RightShoulder == ButtonState.Pressed)
                 {
-                    shoulder_Right = GamePadButtonState.Held;
+                    shoulder_Right = InputButtonState.Held;
                 }
                 else if (currentState.Buttons.RightShoulder == ButtonState.Released &&
                     previousState.Buttons.RightShoulder == ButtonState.Pressed)
                 {
-                    shoulder_Right = GamePadButtonState.Released;
+                    shoulder_Right = InputButtonState.Released;
                 }
                 #endregion
 
@@ -154,22 +148,22 @@ namespace MonoMinion.Handlers
                 if (currentState.Buttons.LeftStick == ButtonState.Released &&
                     previousState.Buttons.LeftStick == ButtonState.Released)
                 {
-                    thumb_Left = GamePadButtonState.None;
+                    thumb_Left = InputButtonState.None;
                 }
                 else if (currentState.Buttons.LeftStick == ButtonState.Pressed &&
                     previousState.Buttons.LeftStick == ButtonState.Released)
                 {
-                    thumb_Left = GamePadButtonState.Clicked;
+                    thumb_Left = InputButtonState.Clicked;
                 }
                 else if (currentState.Buttons.LeftStick == ButtonState.Pressed &&
                     previousState.Buttons.LeftStick == ButtonState.Pressed)
                 {
-                    thumb_Left = GamePadButtonState.Held;
+                    thumb_Left = InputButtonState.Held;
                 }
                 else if (currentState.Buttons.LeftStick == ButtonState.Released &&
                     previousState.Buttons.LeftStick == ButtonState.Pressed)
                 {
-                    thumb_Left = GamePadButtonState.Released;
+                    thumb_Left = InputButtonState.Released;
                 }
                 #endregion
 
@@ -177,22 +171,22 @@ namespace MonoMinion.Handlers
                 if (currentState.Buttons.RightStick == ButtonState.Released &&
                     previousState.Buttons.RightStick == ButtonState.Released)
                 {
-                    thumb_Right = GamePadButtonState.None;
+                    thumb_Right = InputButtonState.None;
                 }
                 else if (currentState.Buttons.RightStick == ButtonState.Pressed &&
                     previousState.Buttons.RightStick == ButtonState.Released)
                 {
-                    thumb_Right = GamePadButtonState.Clicked;
+                    thumb_Right = InputButtonState.Clicked;
                 }
                 else if (currentState.Buttons.RightStick == ButtonState.Pressed &&
                     previousState.Buttons.RightStick == ButtonState.Pressed)
                 {
-                    thumb_Right = GamePadButtonState.Held;
+                    thumb_Right = InputButtonState.Held;
                 }
                 else if (currentState.Buttons.RightStick == ButtonState.Released &&
                     previousState.Buttons.RightStick == ButtonState.Pressed)
                 {
-                    thumb_Right = GamePadButtonState.Released;
+                    thumb_Right = InputButtonState.Released;
                 }
                 #endregion
 
@@ -200,22 +194,22 @@ namespace MonoMinion.Handlers
                 if (currentState.Triggers.Left <= 0f &&
                     previousState.Triggers.Left > 0f)
                 {
-                    trigger_Left = GamePadButtonState.None;
+                    trigger_Left = InputButtonState.None;
                 }
                 else if (currentState.Triggers.Left > 0f &&
                     previousState.Triggers.Left <= 0f)
                 {
-                    trigger_Left = GamePadButtonState.Clicked;
+                    trigger_Left = InputButtonState.Clicked;
                 }
                 else if (currentState.Triggers.Left > 0f &&
                     previousState.Triggers.Left > 0f)
                 {
-                    trigger_Left = GamePadButtonState.Held;
+                    trigger_Left = InputButtonState.Held;
                 }
                 else if (currentState.Triggers.Left <= 0f &&
                     previousState.Triggers.Left > 0f)
                 {
-                    trigger_Left = GamePadButtonState.Released;
+                    trigger_Left = InputButtonState.Released;
                 }
                 #endregion
 
@@ -223,22 +217,22 @@ namespace MonoMinion.Handlers
                 if (currentState.Triggers.Right <= 0f &&
                     previousState.Triggers.Right > 0f)
                 {
-                    trigger_Right = GamePadButtonState.None;
+                    trigger_Right = InputButtonState.None;
                 }
                 else if (currentState.Triggers.Right > 0f &&
                     previousState.Triggers.Right <= 0f)
                 {
-                    trigger_Right = GamePadButtonState.Clicked;
+                    trigger_Right = InputButtonState.Clicked;
                 }
                 else if (currentState.Triggers.Right > 0f &&
                     previousState.Triggers.Right > 0f)
                 {
-                    trigger_Right = GamePadButtonState.Held;
+                    trigger_Right = InputButtonState.Held;
                 }
                 else if (currentState.Triggers.Right <= 0f &&
                     previousState.Triggers.Right > 0f)
                 {
-                    trigger_Right = GamePadButtonState.Released;
+                    trigger_Right = InputButtonState.Released;
                 }
                 #endregion
 
@@ -246,22 +240,22 @@ namespace MonoMinion.Handlers
                 if (currentState.Buttons.A == ButtonState.Released &&
                     previousState.Buttons.A == ButtonState.Released)
                 {
-                    button_A = GamePadButtonState.None;
+                    button_A = InputButtonState.None;
                 }
                 else if (currentState.Buttons.A == ButtonState.Pressed &&
                     previousState.Buttons.A == ButtonState.Released)
                 {
-                    button_A = GamePadButtonState.Clicked;
+                    button_A = InputButtonState.Clicked;
                 }
                 else if (currentState.Buttons.A == ButtonState.Pressed &&
                     previousState.Buttons.A == ButtonState.Pressed)
                 {
-                    button_A = GamePadButtonState.Held;
+                    button_A = InputButtonState.Held;
                 }
                 else if (currentState.Buttons.A == ButtonState.Released &&
                     previousState.Buttons.A == ButtonState.Pressed)
                 {
-                    button_A = GamePadButtonState.Released;
+                    button_A = InputButtonState.Released;
                 }
                 #endregion
 
@@ -269,22 +263,22 @@ namespace MonoMinion.Handlers
                 if (currentState.Buttons.B == ButtonState.Released &&
                     previousState.Buttons.B == ButtonState.Released)
                 {
-                    button_B = GamePadButtonState.None;
+                    button_B = InputButtonState.None;
                 }
                 else if (currentState.Buttons.B == ButtonState.Pressed &&
                     previousState.Buttons.B == ButtonState.Released)
                 {
-                    button_B = GamePadButtonState.Clicked;
+                    button_B = InputButtonState.Clicked;
                 }
                 else if (currentState.Buttons.B == ButtonState.Pressed &&
                     previousState.Buttons.B == ButtonState.Pressed)
                 {
-                    button_B = GamePadButtonState.Held;
+                    button_B = InputButtonState.Held;
                 }
                 else if (currentState.Buttons.B == ButtonState.Released &&
                     previousState.Buttons.B == ButtonState.Pressed)
                 {
-                    button_B = GamePadButtonState.Released;
+                    button_B = InputButtonState.Released;
                 }
                 #endregion
 
@@ -292,22 +286,22 @@ namespace MonoMinion.Handlers
                 if (currentState.Buttons.X == ButtonState.Released &&
                     previousState.Buttons.X == ButtonState.Released)
                 {
-                    button_X = GamePadButtonState.None;
+                    button_X = InputButtonState.None;
                 }
                 else if (currentState.Buttons.X == ButtonState.Pressed &&
                     previousState.Buttons.X == ButtonState.Released)
                 {
-                    button_X = GamePadButtonState.Clicked;
+                    button_X = InputButtonState.Clicked;
                 }
                 else if (currentState.Buttons.X == ButtonState.Pressed &&
                     previousState.Buttons.X == ButtonState.Pressed)
                 {
-                    button_X = GamePadButtonState.Held;
+                    button_X = InputButtonState.Held;
                 }
                 else if (currentState.Buttons.X == ButtonState.Released &&
                     previousState.Buttons.X == ButtonState.Pressed)
                 {
-                    button_X = GamePadButtonState.Released;
+                    button_X = InputButtonState.Released;
                 }
                 #endregion
 
@@ -315,22 +309,22 @@ namespace MonoMinion.Handlers
                 if (currentState.Buttons.Y == ButtonState.Released &&
                     previousState.Buttons.Y == ButtonState.Released)
                 {
-                    button_Y = GamePadButtonState.None;
+                    button_Y = InputButtonState.None;
                 }
                 else if (currentState.Buttons.Y == ButtonState.Pressed &&
                     previousState.Buttons.Y == ButtonState.Released)
                 {
-                    button_Y = GamePadButtonState.Clicked;
+                    button_Y = InputButtonState.Clicked;
                 }
                 else if (currentState.Buttons.Y == ButtonState.Pressed &&
                     previousState.Buttons.Y == ButtonState.Pressed)
                 {
-                    button_Y = GamePadButtonState.Held;
+                    button_Y = InputButtonState.Held;
                 }
                 else if (currentState.Buttons.Y == ButtonState.Released &&
                     previousState.Buttons.Y == ButtonState.Pressed)
                 {
-                    button_Y = GamePadButtonState.Released;
+                    button_Y = InputButtonState.Released;
                 }
                 #endregion
 
@@ -338,22 +332,22 @@ namespace MonoMinion.Handlers
                 if (currentState.Buttons.Back == ButtonState.Released &&
                     previousState.Buttons.Back == ButtonState.Released)
                 {
-                    button_Select = GamePadButtonState.None;
+                    button_Select = InputButtonState.None;
                 }
                 else if (currentState.Buttons.Back == ButtonState.Pressed &&
                     previousState.Buttons.Back == ButtonState.Released)
                 {
-                    button_Select = GamePadButtonState.Clicked;
+                    button_Select = InputButtonState.Clicked;
                 }
                 else if (currentState.Buttons.Back == ButtonState.Pressed &&
                     previousState.Buttons.Back == ButtonState.Pressed)
                 {
-                    button_Select = GamePadButtonState.Held;
+                    button_Select = InputButtonState.Held;
                 }
                 else if (currentState.Buttons.Back == ButtonState.Released &&
                     previousState.Buttons.Back == ButtonState.Pressed)
                 {
-                    button_Select = GamePadButtonState.Released;
+                    button_Select = InputButtonState.Released;
                 }
                 #endregion
 
@@ -361,22 +355,22 @@ namespace MonoMinion.Handlers
                 if (currentState.Buttons.Start == ButtonState.Released &&
                     previousState.Buttons.Start == ButtonState.Released)
                 {
-                    button_Start = GamePadButtonState.None;
+                    button_Start = InputButtonState.None;
                 }
                 else if (currentState.Buttons.Start == ButtonState.Pressed &&
                     previousState.Buttons.Start == ButtonState.Released)
                 {
-                    button_Start = GamePadButtonState.Clicked;
+                    button_Start = InputButtonState.Clicked;
                 }
                 else if (currentState.Buttons.Start == ButtonState.Pressed &&
                     previousState.Buttons.Start == ButtonState.Pressed)
                 {
-                    button_Start = GamePadButtonState.Held;
+                    button_Start = InputButtonState.Held;
                 }
                 else if (currentState.Buttons.Start == ButtonState.Released &&
                     previousState.Buttons.Start == ButtonState.Pressed)
                 {
-                    button_Start = GamePadButtonState.Released;
+                    button_Start = InputButtonState.Released;
                 }
                 #endregion
 
@@ -384,22 +378,22 @@ namespace MonoMinion.Handlers
                 if (currentState.Buttons.BigButton == ButtonState.Released &&
                     previousState.Buttons.BigButton == ButtonState.Released)
                 {
-                    button_Guide = GamePadButtonState.None;
+                    button_Guide = InputButtonState.None;
                 }
                 else if (currentState.Buttons.BigButton == ButtonState.Pressed &&
                     previousState.Buttons.BigButton == ButtonState.Released)
                 {
-                    button_Guide = GamePadButtonState.Clicked;
+                    button_Guide = InputButtonState.Clicked;
                 }
                 else if (currentState.Buttons.BigButton == ButtonState.Pressed &&
                     previousState.Buttons.BigButton == ButtonState.Pressed)
                 {
-                    button_Guide = GamePadButtonState.Held;
+                    button_Guide = InputButtonState.Held;
                 }
                 else if (currentState.Buttons.BigButton == ButtonState.Released &&
                     previousState.Buttons.BigButton == ButtonState.Pressed)
                 {
-                    button_Guide = GamePadButtonState.Released;
+                    button_Guide = InputButtonState.Released;
                 }
                 #endregion
 
@@ -408,22 +402,22 @@ namespace MonoMinion.Handlers
                 if (currentState.DPad.Up == ButtonState.Released &&
                     previousState.DPad.Up == ButtonState.Released)
                 {
-                    dpad_Up = GamePadButtonState.None;
+                    dpad_Up = InputButtonState.None;
                 }
                 else if (currentState.DPad.Up == ButtonState.Pressed &&
                     previousState.DPad.Up == ButtonState.Released)
                 {
-                    dpad_Up = GamePadButtonState.Clicked;
+                    dpad_Up = InputButtonState.Clicked;
                 }
                 else if (currentState.DPad.Up == ButtonState.Pressed &&
                     previousState.DPad.Up == ButtonState.Pressed)
                 {
-                    dpad_Up = GamePadButtonState.Held;
+                    dpad_Up = InputButtonState.Held;
                 }
                 else if (currentState.DPad.Up == ButtonState.Released &&
                     previousState.DPad.Up == ButtonState.Pressed)
                 {
-                    dpad_Up = GamePadButtonState.Released;
+                    dpad_Up = InputButtonState.Released;
                 }
                 #endregion
 
@@ -431,22 +425,22 @@ namespace MonoMinion.Handlers
                 if (currentState.DPad.Down == ButtonState.Released &&
                     previousState.DPad.Down == ButtonState.Released)
                 {
-                    dpad_Down = GamePadButtonState.None;
+                    dpad_Down = InputButtonState.None;
                 }
                 else if (currentState.DPad.Down == ButtonState.Pressed &&
                     previousState.DPad.Down == ButtonState.Released)
                 {
-                    dpad_Down = GamePadButtonState.Clicked;
+                    dpad_Down = InputButtonState.Clicked;
                 }
                 else if (currentState.DPad.Down == ButtonState.Pressed &&
                     previousState.DPad.Down == ButtonState.Pressed)
                 {
-                    dpad_Down = GamePadButtonState.Held;
+                    dpad_Down = InputButtonState.Held;
                 }
                 else if (currentState.DPad.Down == ButtonState.Released &&
                     previousState.DPad.Down == ButtonState.Pressed)
                 {
-                    dpad_Down = GamePadButtonState.Released;
+                    dpad_Down = InputButtonState.Released;
                 }
                 #endregion
 
@@ -454,22 +448,22 @@ namespace MonoMinion.Handlers
                 if (currentState.DPad.Left == ButtonState.Released &&
                     previousState.DPad.Left == ButtonState.Released)
                 {
-                    dpad_Left = GamePadButtonState.None;
+                    dpad_Left = InputButtonState.None;
                 }
                 else if (currentState.DPad.Left == ButtonState.Pressed &&
                     previousState.DPad.Left == ButtonState.Released)
                 {
-                    dpad_Left = GamePadButtonState.Clicked;
+                    dpad_Left = InputButtonState.Clicked;
                 }
                 else if (currentState.DPad.Left == ButtonState.Pressed &&
                     previousState.DPad.Left == ButtonState.Pressed)
                 {
-                    dpad_Left = GamePadButtonState.Held;
+                    dpad_Left = InputButtonState.Held;
                 }
                 else if (currentState.DPad.Left == ButtonState.Released &&
                     previousState.DPad.Left == ButtonState.Pressed)
                 {
-                    dpad_Left = GamePadButtonState.Released;
+                    dpad_Left = InputButtonState.Released;
                 }
                 #endregion
 
@@ -477,30 +471,32 @@ namespace MonoMinion.Handlers
                 if (currentState.DPad.Right == ButtonState.Released &&
                     previousState.DPad.Right == ButtonState.Released)
                 {
-                    dpad_Right = GamePadButtonState.None;
+                    dpad_Right = InputButtonState.None;
                 }
                 else if (currentState.DPad.Right == ButtonState.Pressed &&
                     previousState.DPad.Right == ButtonState.Released)
                 {
-                    dpad_Right = GamePadButtonState.Clicked;
+                    dpad_Right = InputButtonState.Clicked;
                 }
                 else if (currentState.DPad.Right == ButtonState.Pressed &&
                     previousState.DPad.Right == ButtonState.Pressed)
                 {
-                    dpad_Right = GamePadButtonState.Held;
+                    dpad_Right = InputButtonState.Held;
                 }
                 else if (currentState.DPad.Right == ButtonState.Released &&
                     previousState.DPad.Right == ButtonState.Pressed)
                 {
-                    dpad_Right = GamePadButtonState.Released;
+                    dpad_Right = InputButtonState.Released;
                 }
                 #endregion
 
                 previousState = currentState;
             }          
         }
+        #endregion
 
 
+        #region Helpers
         /// <summary>
         /// Sets the gamepad vibration amount
         /// </summary>
@@ -508,8 +504,37 @@ namespace MonoMinion.Handlers
         /// <param name="right">Right motor vibration amount (0.0 .. 1.0)</param>
         public void SetVibration(float left, float right)
         {
+            // TODO: Implement vibration functionality
             //GamePad.SetVibration(player, left, right);
         }
+
+
+        /// <summary>
+        /// Gets the button state for a specific GamePad button
+        /// </summary>
+        /// <param name="button">The GamePad button to check</param>
+        /// <returns>The current gamepad button state</returns>
+        public InputButtonState GetButtonState(Buttons button)
+        {
+            if (currentState.IsButtonDown(button) &&
+                previousState.IsButtonUp(button))
+            {
+                return InputButtonState.Clicked;
+            }
+            else if (currentState.IsButtonDown(button) &&
+                previousState.IsButtonDown(button))
+            {
+                return InputButtonState.Held;
+            }
+            else if (currentState.IsButtonUp(button) &&
+                previousState.IsButtonDown(button))
+            {
+                return InputButtonState.Released;
+            }
+
+            return InputButtonState.None;
+        }
+        #endregion
     }
 
 }

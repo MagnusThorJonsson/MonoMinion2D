@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-using MonoMinion.Handlers;
+using MonoMinion.Input.Handlers;
 using MonoMinion.Helpers;
 
 namespace MonoMinion.GUI.Controls

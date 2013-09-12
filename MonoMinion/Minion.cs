@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
 
-using MonoMinion.Handlers;
+using MonoMinion.Input.Handlers;
 using MonoMinion.Components;
 #endregion
 

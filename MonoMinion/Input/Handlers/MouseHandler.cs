@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace MonoMinion.Handlers
+namespace MonoMinion.Input.Handlers
 {
     /// <summary>
     /// Handles mouse input

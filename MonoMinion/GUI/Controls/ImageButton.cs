@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoMinion.Graphics.Sprites;
-using MonoMinion.Handlers;
+using MonoMinion.Input.Handlers;
 
 namespace MonoMinion.GUI.Controls
 {
