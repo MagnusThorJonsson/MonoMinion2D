@@ -84,10 +84,12 @@ namespace MonoMinion.GUI
                 }
             }
 
+#if !XBOX
             if (KeyboardHandler.KeyPressed(Keys.Up))
                 Previous();
             if (KeyboardHandler.KeyPressed(Keys.Down))
                 Next();
+#endif
         }
 
 

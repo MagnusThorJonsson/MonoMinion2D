@@ -50,8 +50,10 @@ namespace MonoMinion.GUI.Controls
             if (!this.HasFocus)
                 return;
 
+#if !XBOX
             if (KeyboardHandler.KeyReleased(Keys.Enter))
                 base.OnSelected(null);
+#endif
         }
     }
 }

@@ -44,8 +44,10 @@ namespace MonoMinion
 
         protected GameScreen startScreen;
         public GameManager GameManager { get; set; }
+#if !XBOX
         public KeyboardHandler InputHandler { get; set; }
         public MouseHandler MouseHandler { get; set; }
+#endif
         public static Minion Instance;
 
         private Texture2D _texture1x1;
@@ -80,9 +82,11 @@ namespace MonoMinion
             this.graphics.ApplyChanges();
 
             // Add and initialize game components
+            this.Components.Add(this.GameManager = new GameManager(this));
+#if !XBOX
             this.Components.Add(this.MouseHandler = new MouseHandler(this));
             this.Components.Add(this.InputHandler = new KeyboardHandler(this));
-            this.Components.Add(this.GameManager = new GameManager(this));
+#endif
 
 #if DEBUG
             this.Components.Add(new FrameRateCounter(this));

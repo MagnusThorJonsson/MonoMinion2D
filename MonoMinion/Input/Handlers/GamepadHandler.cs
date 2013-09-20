@@ -24,52 +24,52 @@ namespace MonoMinion.Input.Handlers
         // Thumbstick
         public Vector2 LThumb { get { return currentState.ThumbSticks.Left; } }
         public Vector2 RThumb { get { return currentState.ThumbSticks.Right; } }
-        protected InputButtonState thumb_Left;
+        protected InputButtonState thumb_Left = InputButtonState.None;
         public InputButtonState LThumbButton { get { return thumb_Left; } }
-        protected InputButtonState thumb_Right;
+        protected InputButtonState thumb_Right = InputButtonState.None;
         public InputButtonState RThumbButton { get { return thumb_Right; } }
 
         // Triggers
         public float LTrigger { get { return currentState.Triggers.Left; } }
         public float RTrigger { get { return currentState.Triggers.Right; } }
 
-        protected InputButtonState trigger_Left;
+        protected InputButtonState trigger_Left = InputButtonState.None;
         public InputButtonState LTriggerButton { get { return trigger_Left; } }
-        protected InputButtonState trigger_Right;
+        protected InputButtonState trigger_Right = InputButtonState.None;
         public InputButtonState RTriggerButton { get { return trigger_Right; } }
 
         // Buttons - Shoulders
-        protected InputButtonState shoulder_Left;
+        protected InputButtonState shoulder_Left = InputButtonState.None;
         public InputButtonState LShoulder { get { return shoulder_Left; } }
-        protected InputButtonState shoulder_Right;
+        protected InputButtonState shoulder_Right = InputButtonState.None;
         public InputButtonState RShoulder { get { return shoulder_Right; } }
 
         // Buttons - Action
-        protected InputButtonState button_A;
+        protected InputButtonState button_A = InputButtonState.None;
         public InputButtonState A { get { return button_A; } }
-        protected InputButtonState button_B;
+        protected InputButtonState button_B = InputButtonState.None;
         public InputButtonState B { get { return button_B; } }
-        protected InputButtonState button_X;
+        protected InputButtonState button_X = InputButtonState.None;
         public InputButtonState X { get { return button_X; } }
-        protected InputButtonState button_Y;
+        protected InputButtonState button_Y = InputButtonState.None;
         public InputButtonState Y { get { return button_Y; } }
         
         // Buttons - Control
-        protected InputButtonState button_Select;
+        protected InputButtonState button_Select = InputButtonState.None;
         public InputButtonState Select { get { return button_Select; } }
-        protected InputButtonState button_Start;
+        protected InputButtonState button_Start = InputButtonState.None;
         public InputButtonState Start { get { return button_Start; } }
-        protected InputButtonState button_Guide;
+        protected InputButtonState button_Guide = InputButtonState.None;
         public InputButtonState Guide { get { return button_Guide; } }
         
         // D-Pad
-        protected InputButtonState dpad_Up;
+        protected InputButtonState dpad_Up = InputButtonState.None;
         public InputButtonState Up { get { return dpad_Up; } }
-        protected InputButtonState dpad_Down;
+        protected InputButtonState dpad_Down = InputButtonState.None;
         public InputButtonState Down { get { return dpad_Down; } }
-        protected InputButtonState dpad_Left;
+        protected InputButtonState dpad_Left = InputButtonState.None;
         public InputButtonState Left { get { return dpad_Left; } }
-        protected InputButtonState dpad_Right;
+        protected InputButtonState dpad_Right = InputButtonState.None;
         public InputButtonState Right { get { return dpad_Right; } }
         #endregion
 
@@ -84,11 +84,17 @@ namespace MonoMinion.Input.Handlers
             this.player = player;
         }
 
+        public virtual void Update(GameTime gameTime)
+        {
+            UpdateState(gameTime);
+            SaveState();
+        }
+
         /// <summary>
         /// Call to update the gamepad handler
         /// </summary>
         /// <param name="gameTime">Current GameTime object</param>
-        public virtual void Update(GameTime gameTime)
+        public void UpdateState(GameTime gameTime)
         {
             currentState = GamePad.GetState(player);
 
@@ -212,7 +218,7 @@ namespace MonoMinion.Input.Handlers
                     trigger_Left = InputButtonState.Released;
                 }
                 #endregion
-
+                
                 #region Right Trigger Button
                 if (currentState.Triggers.Right <= 0f &&
                     previousState.Triggers.Right > 0f)
@@ -489,9 +495,12 @@ namespace MonoMinion.Input.Handlers
                     dpad_Right = InputButtonState.Released;
                 }
                 #endregion
-
-                previousState = currentState;
             }          
+        }
+
+        public void SaveState()
+        {
+            previousState = currentState;
         }
         #endregion
 
