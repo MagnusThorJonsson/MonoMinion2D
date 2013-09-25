@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using MonoMinion.Helpers;
 
 namespace MonoMinion.Collision
 {
@@ -141,15 +142,31 @@ namespace MonoMinion.Collision
 
 
         #region Update & Draw
-        /// <summary>
-        /// Updates the shape
-        /// </summary>
-        /// <param name="gameTime">The current game time</param>
-        public virtual void Update(GameTime gameTime)
+        public void Draw()
         {
-            // TODO: Maybe find a better place for this
-            // Regenerate and project axis from cache
-            //CacheVertices();
+            Draw(Vector2.Zero, Color.Black, 1);
+        }
+
+        public void Draw(Color color)
+        {
+            Draw(Vector2.Zero, color, 1);
+        }
+
+        public void Draw(Color color, int borderWidth)
+        {
+            Draw(Vector2.Zero, color, borderWidth);
+        }
+
+        public void Draw(Vector2 velocity, Color color, int borderWidth)
+        {
+            Vector2[] verts = GetVertices(Vector2.Zero);
+            for (int i = 0; i < verts.Length; i++)
+            {
+                if (verts.Length > (i + 1))
+                    DrawingHelper.DrawLine(verts[i], verts[i + 1], borderWidth, color);
+                else
+                    DrawingHelper.DrawLine(verts[i], verts[0], borderWidth, color);
+            }
         }
         #endregion
 

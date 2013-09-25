@@ -26,8 +26,7 @@ namespace MonoMinion.Graphics.Sprites
         protected SpriteAnimation currentAnimation;
 
         public bool IsVisible;
-        public Vector2 position;
-        public virtual Vector2 Position { get { return position; } set { position = value; } }
+        public Vector2 Position;
         public Vector2 Origin;
         public float Rotation;
         public float Scale;
@@ -159,7 +158,7 @@ namespace MonoMinion.Graphics.Sprites
 
         public virtual void Draw(GameTime gameTime)
         {
-            if (IsVisible && ((currentAnimation != null && currentAnimation.CurrentFrame != Rectangle.Empty) || isStatic))
+            if (spriteSheet != null && IsVisible && ((currentAnimation != null && currentAnimation.CurrentFrame != Rectangle.Empty) || isStatic))
             {
                 if (isStatic)
                 {

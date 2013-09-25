@@ -19,11 +19,14 @@ namespace MonoMinion.Input
     public class InputMapper
     {
         #region Variables & Properties
+        // TODO: Make non-static
         private static Dictionary<string, InputAction> actions = new Dictionary<string, InputAction>();
 
         private GamepadHandler gamepadHandler;
+        public GamepadHandler Gamepad { get { return gamepadHandler; } }
 #if !XBOX
         private KeyboardHandler keyboardHandler;
+        public KeyboardHandler Keyboard { get { return keyboardHandler; } }
 #endif
 
         public event InputMapperActionTrigger ActionEvent;

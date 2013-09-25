@@ -22,12 +22,22 @@ namespace MonoMinion.Input.Handlers
         public GamePadState PreviousState { get { return previousState; } }
 
         // Thumbstick
-        public Vector2 LThumb { get { return currentState.ThumbSticks.Left; } }
         public Vector2 RThumb { get { return currentState.ThumbSticks.Right; } }
-        protected InputButtonState thumb_Left = InputButtonState.None;
-        public InputButtonState LThumbButton { get { return thumb_Left; } }
+        public Vector2 LThumb { get { return currentState.ThumbSticks.Left; } }
+        public Vector2 LThumbInvertY 
+        { 
+            get 
+            { 
+                return new Vector2(
+                    currentState.ThumbSticks.Left.X,
+                    currentState.ThumbSticks.Left.Y * -1
+                ); 
+            }
+        }
         protected InputButtonState thumb_Right = InputButtonState.None;
         public InputButtonState RThumbButton { get { return thumb_Right; } }
+        protected InputButtonState thumb_Left = InputButtonState.None;
+        public InputButtonState LThumbButton { get { return thumb_Left; } }
 
         // Triggers
         public float LTrigger { get { return currentState.Triggers.Left; } }
