@@ -4,6 +4,12 @@
         <name>MonoGame.Framework</name>
     </assembly>
     <members>
+        <member name="M:Microsoft.Xna.Framework.Audio.SoundEffectInstance.TryPlay">
+            <summary>
+            Tries to play the sound, returns true if successful
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Microsoft.Xna.Framework.Content.ExternalReferenceReader">
             <summary>
             External reference reader, provided for compatibility with XNA Framework built content
@@ -1773,6 +1779,103 @@
             This video contains music and dialog.
             </summary>
         </member>
+        <member name="M:Microsoft.Xna.Framework.GameComponent.Dispose(System.Boolean)">
+            <summary>
+            Shuts down the component.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.GameComponent.Dispose">
+            <summary>
+            Shuts down the component.
+            </summary>
+        </member>
+        <member name="T:MonoGame.Framework.MonoLive.MonoLive">
+            <remarks/>
+        </member>
+        <member name="M:MonoGame.Framework.MonoLive.MonoLive.#ctor">
+            <remarks/>
+        </member>
+        <member name="M:MonoGame.Framework.MonoLive.MonoLive.SignIn(System.String,System.String)">
+            <remarks/>
+        </member>
+        <member name="M:MonoGame.Framework.MonoLive.MonoLive.SignInAsync(System.String,System.String)">
+            <remarks/>
+        </member>
+        <member name="M:MonoGame.Framework.MonoLive.MonoLive.SignInAsync(System.String,System.String,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:MonoGame.Framework.MonoLive.MonoLive.Register(System.String,System.String,System.String)">
+            <remarks/>
+        </member>
+        <member name="M:MonoGame.Framework.MonoLive.MonoLive.RegisterAsync(System.String,System.String,System.String)">
+            <remarks/>
+        </member>
+        <member name="M:MonoGame.Framework.MonoLive.MonoLive.RegisterAsync(System.String,System.String,System.String,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:MonoGame.Framework.MonoLive.MonoLive.CancelAsync(System.Object)">
+            <remarks/>
+        </member>
+        <member name="E:MonoGame.Framework.MonoLive.MonoLive.SignInCompleted">
+            <remarks/>
+        </member>
+        <member name="E:MonoGame.Framework.MonoLive.MonoLive.RegisterCompleted">
+            <remarks/>
+        </member>
+        <member name="T:MonoGame.Framework.MonoLive.Result">
+            <remarks/>
+        </member>
+        <member name="P:MonoGame.Framework.MonoLive.Result.ok">
+            <remarks/>
+        </member>
+        <member name="P:MonoGame.Framework.MonoLive.Result.reason">
+            <remarks/>
+        </member>
+        <member name="P:MonoGame.Framework.MonoLive.Result.Gamer">
+            <remarks/>
+        </member>
+        <member name="T:MonoGame.Framework.MonoLive.Gamer">
+            <remarks/>
+        </member>
+        <member name="P:MonoGame.Framework.MonoLive.Gamer.Id">
+            <remarks/>
+        </member>
+        <member name="P:MonoGame.Framework.MonoLive.Gamer.GamerTag">
+            <remarks/>
+        </member>
+        <member name="P:MonoGame.Framework.MonoLive.Gamer.Enabled">
+            <remarks/>
+        </member>
+        <member name="P:MonoGame.Framework.MonoLive.Gamer.Gravatar">
+            <remarks/>
+        </member>
+        <member name="P:MonoGame.Framework.MonoLive.Gamer.Email">
+            <remarks/>
+        </member>
+        <member name="P:MonoGame.Framework.MonoLive.Gamer.Password">
+            <remarks/>
+        </member>
+        <member name="T:MonoGame.Framework.MonoLive.SignInCompletedEventHandler">
+            <remarks/>
+        </member>
+        <member name="T:MonoGame.Framework.MonoLive.SignInCompletedEventArgs">
+            <remarks/>
+        </member>
+        <member name="P:MonoGame.Framework.MonoLive.SignInCompletedEventArgs.Result">
+            <remarks/>
+        </member>
+        <member name="T:MonoGame.Framework.MonoLive.RegisterCompletedEventHandler">
+            <remarks/>
+        </member>
+        <member name="T:MonoGame.Framework.MonoLive.RegisterCompletedEventArgs">
+            <remarks/>
+        </member>
+        <member name="P:MonoGame.Framework.MonoLive.RegisterCompletedEventArgs.Result">
+            <remarks/>
+        </member>
+        <member name="P:MonoGame.Framework.GamerServices.SignInCompletedEventArgs.Gamer">
+            <remarks/>
+        </member>
         <member name="P:Microsoft.Xna.Framework.GameWindow.Position">
             <summary>
             The location of this window on the desktop, eg: global coordinate space
@@ -2032,6 +2135,22 @@
             Ensures that the MediaManager has been shutdown. Must be called from UI thread.
             </summary>
         </member>
+        <member name="M:Microsoft.Xna.Framework.Net.MonoGamerPeer.GetServerList(Lidgren.Network.NetPeer)">
+            <summary>
+            Contacts the Master Server on the net and gets a list of available host games
+            </summary>
+            <param name="netPeer"></param>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Net.MonoGamerPeer.SimulatedLatency">
+            <summary>
+            Used to Simulate the delay between computers
+            </summary>
+        </member>
+        <member name="P:Microsoft.Xna.Framework.Net.MonoGamerPeer.SimulatedPacketLoss">
+            <summary>
+            Used to simulate the number of packets you might expect to loose.
+            </summary>
+        </member>
         <member name="T:Microsoft.Xna.Framework.Storage.StorageDeviceHelper">
             <summary>
             This is a helper class to obtain the native file system information.
@@ -2056,20 +2175,102 @@
             <returns>A bounding box that encapsulates the given point cloud.</returns>
             <exception cref="T:System.ArgumentException">Thrown if the given list has no points.</exception>
         </member>
-        <member name="M:Microsoft.Xna.Framework.GameComponent.Dispose(System.Boolean)">
+        <member name="M:Microsoft.Xna.Framework.Input.GamePadButtons.op_Equality(Microsoft.Xna.Framework.Input.GamePadButtons,Microsoft.Xna.Framework.Input.GamePadButtons)">
             <summary>
-            Shuts down the component.
+            Determines whether two specified instances of <see cref="T:Microsoft.Xna.Framework.Input.GamePadButtons"/> are equal.
             </summary>
+            <param name="left">The first object to compare.</param>
+            <param name="right">The second object to compare.</param>
+            <returns>true if <paramref name="left"/> and <paramref name="right"/> are equal; otherwise, false.</returns>
         </member>
-        <member name="M:Microsoft.Xna.Framework.GameComponent.Dispose">
+        <member name="M:Microsoft.Xna.Framework.Input.GamePadButtons.op_Inequality(Microsoft.Xna.Framework.Input.GamePadButtons,Microsoft.Xna.Framework.Input.GamePadButtons)">
             <summary>
-            Shuts down the component.
+            Determines whether two specified instances of <see cref="T:Microsoft.Xna.Framework.Input.GamePadButtons"/> are not equal.
             </summary>
+            <param name="left">The first object to compare.</param>
+            <param name="right">The second object to compare.</param>
+            <returns>true if <paramref name="left"/> and <paramref name="right"/> are not equal; otherwise, false.</returns>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Input.GamePadButtons.Equals(System.Object)">
+            <summary>
+            Returns a value indicating whether this instance is equal to a specified object.
+            </summary>
+            <param name="obj">An object to compare to this instance.</param>
+            <returns>true if <paramref name="obj"/> is a <see cref="T:Microsoft.Xna.Framework.Input.GamePadButtons"/> and has the same value as this instance; otherwise, false.</returns>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Input.GamePadDPad.op_Equality(Microsoft.Xna.Framework.Input.GamePadDPad,Microsoft.Xna.Framework.Input.GamePadDPad)">
+            <summary>
+            Determines whether two specified instances of <see cref="T:Microsoft.Xna.Framework.Input.GamePadDPad"/> are equal.
+            </summary>
+            <param name="left">The first object to compare.</param>
+            <param name="right">The second object to compare.</param>
+            <returns>true if <paramref name="left"/> and <paramref name="right"/> are equal; otherwise, false.</returns>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Input.GamePadDPad.op_Inequality(Microsoft.Xna.Framework.Input.GamePadDPad,Microsoft.Xna.Framework.Input.GamePadDPad)">
+            <summary>
+            Determines whether two specified instances of <see cref="T:Microsoft.Xna.Framework.Input.GamePadDPad"/> are not equal.
+            </summary>
+            <param name="left">The first object to compare.</param>
+            <param name="right">The second object to compare.</param>
+            <returns>true if <paramref name="left"/> and <paramref name="right"/> are not equal; otherwise, false.</returns>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Input.GamePadDPad.Equals(System.Object)">
+            <summary>
+            Returns a value indicating whether this instance is equal to a specified object.
+            </summary>
+            <param name="obj">An object to compare to this instance.</param>
+            <returns>true if <paramref name="obj"/> is a <see cref="T:Microsoft.Xna.Framework.Input.GamePadDPad"/> and has the same value as this instance; otherwise, false.</returns>
         </member>
         <member name="M:Microsoft.Xna.Framework.Input.GamePadState.GetVirtualButtons">
             <summary>
             Gets the button mask along with 'virtual buttons' like LeftThumbstickLeft.
             </summary>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Input.GamePadThumbSticks.op_Equality(Microsoft.Xna.Framework.Input.GamePadThumbSticks,Microsoft.Xna.Framework.Input.GamePadThumbSticks)">
+            <summary>
+            Determines whether two specified instances of <see cref="T:Microsoft.Xna.Framework.Input.GamePadThumbSticks"/> are equal.
+            </summary>
+            <param name="left">The first object to compare.</param>
+            <param name="right">The second object to compare.</param>
+            <returns>true if <paramref name="left"/> and <paramref name="right"/> are equal; otherwise, false.</returns>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Input.GamePadThumbSticks.op_Inequality(Microsoft.Xna.Framework.Input.GamePadThumbSticks,Microsoft.Xna.Framework.Input.GamePadThumbSticks)">
+            <summary>
+            Determines whether two specified instances of <see cref="T:Microsoft.Xna.Framework.Input.GamePadThumbSticks"/> are not equal.
+            </summary>
+            <param name="left">The first object to compare.</param>
+            <param name="right">The second object to compare.</param>
+            <returns>true if <paramref name="left"/> and <paramref name="right"/> are not equal; otherwise, false.</returns>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Input.GamePadThumbSticks.Equals(System.Object)">
+            <summary>
+            Returns a value indicating whether this instance is equal to a specified object.
+            </summary>
+            <param name="obj">An object to compare to this instance.</param>
+            <returns>true if <paramref name="obj"/> is a <see cref="T:Microsoft.Xna.Framework.Input.GamePadThumbSticks"/> and has the same value as this instance; otherwise, false.</returns>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Input.GamePadTriggers.op_Equality(Microsoft.Xna.Framework.Input.GamePadTriggers,Microsoft.Xna.Framework.Input.GamePadTriggers)">
+            <summary>
+            Determines whether two specified instances of <see cref="T:Microsoft.Xna.Framework.Input.GamePadTriggers"/> are equal.
+            </summary>
+            <param name="left">The first object to compare.</param>
+            <param name="right">The second object to compare.</param>
+            <returns>true if <paramref name="left"/> and <paramref name="right"/> are equal; otherwise, false.</returns>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Input.GamePadTriggers.op_Inequality(Microsoft.Xna.Framework.Input.GamePadTriggers,Microsoft.Xna.Framework.Input.GamePadTriggers)">
+            <summary>
+            Determines whether two specified instances of <see cref="T:Microsoft.Xna.Framework.Input.GamePadTriggers"/> are not equal.
+            </summary>
+            <param name="left">The first object to compare.</param>
+            <param name="right">The second object to compare.</param>
+            <returns>true if <paramref name="left"/> and <paramref name="right"/> are not equal; otherwise, false.</returns>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Input.GamePadTriggers.Equals(System.Object)">
+            <summary>
+            Returns a value indicating whether this instance is equal to a specified object.
+            </summary>
+            <param name="obj">An object to compare to this instance.</param>
+            <returns>true if <paramref name="obj"/> is a <see cref="T:Microsoft.Xna.Framework.Input.GamePadTriggers"/> and has the same value as this instance; otherwise, false.</returns>
         </member>
         <member name="T:Microsoft.Xna.Framework.Input.KeyboardState">
             <summary>
@@ -3139,7 +3340,23 @@
             <param name="value">A value.</param>
             <returns><c>true</c> if <c>value</c> is powered by two; otherwise <c>false</c>.</returns>
         </member>
-        <member name="M:Microsoft.Xna.Framework.Matrix.findDeterminants(Microsoft.Xna.Framework.Matrix@,System.Single@,System.Single@,System.Single@,System.Single@,System.Single@,System.Single@,System.Single@,System.Single@,System.Single@,System.Single@,System.Single@,System.Single@,System.Single@)">
+        <member name="M:Microsoft.Xna.Framework.Matrix.CreateShadow(Microsoft.Xna.Framework.Vector3,Microsoft.Xna.Framework.Plane)">
+            <summary>
+            Creates a Matrix that flattens geometry into a specified Plane as if casting a shadow from a specified light source. 
+            </summary>
+            <param name="lightDirection">A Vector3 specifying the direction from which the light that will cast the shadow is coming.</param>
+            <param name="plane">The Plane onto which the new matrix should flatten geometry so as to cast a shadow.</param>
+            <returns>A Matrix that can be used to flatten geometry onto the specified plane from the specified direction. </returns>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Matrix.CreateShadow(Microsoft.Xna.Framework.Vector3@,Microsoft.Xna.Framework.Plane@,Microsoft.Xna.Framework.Matrix@)">
+            <summary>
+            Creates a Matrix that flattens geometry into a specified Plane as if casting a shadow from a specified light source. 
+            </summary>
+            <param name="lightDirection">A Vector3 specifying the direction from which the light that will cast the shadow is coming.</param>
+            <param name="plane">The Plane onto which the new matrix should flatten geometry so as to cast a shadow.</param>
+            <param name="result">A Matrix that can be used to flatten geometry onto the specified plane from the specified direction. </param>
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Matrix.FindDeterminants(Microsoft.Xna.Framework.Matrix@,System.Single@,System.Single@,System.Single@,System.Single@,System.Single@,System.Single@,System.Single@,System.Single@,System.Single@,System.Single@,System.Single@,System.Single@,System.Single@)">
             <summary>
             Helper method for using the Laplace expansion theorem using two rows expansions to calculate major and 
             minor determinants of a 4x4 matrix. This method is used for inverting a matrix.
@@ -3735,13 +3952,6 @@
             Returns list of directory names in the storage-container.
             </summary>
             <returns>List of directory names.</returns>
-        </member>
-        <member name="M:Microsoft.Xna.Framework.Storage.StorageContainer.GetDirectoryNames(System.String)">
-            <summary>
-            Returns list of directory names with given search pattern.
-            </summary>
-            <param name="searchPattern">A search pattern that supports single-character ("?") and multicharacter ("*") wildcards.</param>
-            <returns>List of matched directory names.</returns>
         </member>
         <member name="M:Microsoft.Xna.Framework.Storage.StorageContainer.GetFileNames">
             <summary>
@@ -4754,6 +4964,33 @@
             </summary>
             <param name="name">The filepath relative to the title storage area.</param>
             <returns>A open stream or null if the file is not found.</returns>
+        </member>
+        <member name="F:Microsoft.Xna.Framework.Audio.MSADPCMToPCM.AdaptionTable">
+            A bunch of magical numbers that predict the sample data from the
+            MSADPCM wavedata. Do not attempt to understand at all costs!
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Audio.MSADPCMToPCM.getNibbleBlock(System.Byte,System.Byte[])">
+            Splits the MSADPCM samples from each byte block.
+            @param block An MSADPCM sample byte
+            @param nibbleBlock we copy the parsed shorts into here
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Audio.MSADPCMToPCM.calculateSample(System.Byte,System.Byte,System.Int16@,System.Int16@,System.Int16@)">
+            Calculates PCM samples based on previous samples and a nibble input.
+            @param nibble A parsed MSADPCM sample we got from getNibbleBlock
+            @param predictor The predictor we get from the MSADPCM block's preamble
+            @param sample_1 The first sample we use to predict the next sample
+            @param sample_2 The second sample we use to predict the next sample
+            @param delta Used to calculate the final sample
+            @return The calculated PCM sample
+        </member>
+        <member name="M:Microsoft.Xna.Framework.Audio.MSADPCMToPCM.MSADPCM_TO_PCM(System.IO.BinaryReader,System.Int16,System.Int16)">
+             Decodes MSADPCM data to signed 16-bit PCM data.
+             @param Source A BinaryReader containing the headerless MSADPCM data
+             @param numChannels The number of channels (WAVEFORMATEX nChannels)
+             @param blockAlign The ADPCM block size (WAVEFORMATEX nBlockAlign)
+             @return A byte array containing the raw 16-bit PCM wavedata
+            
+             NOTE: The original MSADPCMToPCM class returns as a short[] array!
         </member>
     </members>
 </doc>

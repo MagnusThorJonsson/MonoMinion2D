@@ -25,6 +25,8 @@ namespace MonoMinion
                     this.IsTransparent = true;
                     this._isHud = true;
                 }
+                else
+                    this._isHud = false;
             }
         }
         #endregion
