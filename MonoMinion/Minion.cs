@@ -20,11 +20,15 @@ namespace MonoMinion
     public abstract class Minion : Game
     {
         #region Variables and Properties
+        public static Minion Instance;
+        
         protected GraphicsDeviceManager graphics;
         protected ContentManager content;
         protected Point screenSize;
 
-        protected SpriteFont fontGui;
+        /// <summary>
+        /// The GUI font
+        /// </summary>
         public SpriteFont FontGui
         {
             get
@@ -32,8 +36,11 @@ namespace MonoMinion
                 return this.fontGui;
             }
         }
-
-        protected SpriteBatch spriteBatch;
+        protected SpriteFont fontGui;
+        
+        /// <summary>
+        /// The SpriteBatch
+        /// </summary>
         public SpriteBatch SpriteBatch
         {
             get
@@ -41,17 +48,22 @@ namespace MonoMinion
                 return this.spriteBatch;
             }
         }
-
+        protected SpriteBatch spriteBatch;
+        
         protected GameScreen startScreen;
         public GameManager GameManager { get; set; }
+        public TimerManager TimerManager { get; internal set; }
+
 #if !XBOX
         public KeyboardHandler InputHandler { get; set; }
         public MouseHandler MouseHandler { get; set; }
 #endif
-        public static Minion Instance;
-
-        private Texture2D _texture1x1;
+        
+        /// <summary>
+        /// A 1x1 texture block
+        /// </summary>
         public Texture2D Texture1x1 { get { return this._texture1x1; } }
+        private Texture2D _texture1x1;
         #endregion
 
         /// <summary>
@@ -83,6 +95,7 @@ namespace MonoMinion
 
             // Add and initialize game components
             this.Components.Add(this.GameManager = new GameManager(this));
+            this.Components.Add(this.TimerManager = new TimerManager(this));
 #if !XBOX
             this.Components.Add(this.MouseHandler = new MouseHandler(this));
             this.Components.Add(this.InputHandler = new KeyboardHandler(this));
