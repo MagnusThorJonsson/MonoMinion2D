@@ -5,14 +5,39 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoMinion.Graphics
 {
+    /// <summary>
+    /// A tilesheet container used by the TileEngine
+    /// </summary>
     public class TileSheet
     {
         #region Variables
-        public string Name;
-        public Texture2D SpriteSheet;
+        /// <summary>
+        /// The name of the tilesheet
+        /// </summary>
+        public string Name { get { return name; } }
+        protected string name;
+
+        /// <summary>
+        /// The texture used for this tilesheet
+        /// </summary>
+        public Texture2D Spritesheet { get { return spritesheet; } }
+        protected Texture2D spritesheet;
+
+        /// <summary>
+        /// The tile rectangles in this sheet
+        /// </summary>
         public List<Rectangle> Tiles;
+
+        /// <summary>
+        /// The tile keys in this sheet
+        /// </summary>
         public Dictionary<string, int> TileKeys;
+
+        /// <summary>
+        /// The groups used by this sheet
+        /// </summary>
         public Dictionary<string, List<int>> TileGroups;
+        
         private Random _random;
         #endregion
 
@@ -24,8 +49,8 @@ namespace MonoMinion.Graphics
         /// <param name="tileCount">Number of tiles in the tilesheet</param>
         public TileSheet(string name, Texture2D texture)//, int tileCount)
         {
-            Name = name;
-            SpriteSheet = texture;
+            this.name = name;
+            spritesheet = texture;
             Tiles = new List<Rectangle>();
             TileKeys = new Dictionary<string, int>();
             TileGroups = new Dictionary<string, List<int>>();

@@ -19,6 +19,10 @@ namespace MonoMinion
     /// </summary> 
     public abstract class Minion : Game
     {
+        #region Config
+        public static readonly string TILESHEET_PATH = "Content\\World\\Tilesets\\";
+        #endregion
+
         #region Variables and Properties
         public static Minion Instance;
         

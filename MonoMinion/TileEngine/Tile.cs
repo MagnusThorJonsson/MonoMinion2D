@@ -14,13 +14,17 @@ namespace MonoMinion.TileEngine
             X = x;
             Y = y;
         }
-    }
+    } 
 
+    /// <summary>
+    /// Tile class for the TileMap
+    /// </summary>
     public class Tile
     {
         #region Variables
-        protected Point size;
-        protected Point position;
+        /// <summary>
+        /// The tile position in the TileMap array
+        /// </summary>
         public Point Position
         {
             get { return position; }
@@ -30,24 +34,35 @@ namespace MonoMinion.TileEngine
                 CollidableShape.Position = new Vector2(position.X * size.X, position.Y * size.Y);
             }
         }
+        protected Point position;
 
         // Cached Values
+        /// <summary>
+        /// The Tile base graphic
+        /// </summary>
         public int BaseTile;
+
+        /// <summary>
+        /// The Tile color tint
+        /// </summary>
         public Color Tint;
 
+        /// <summary>
+        /// Flags if the tile is visible
+        /// </summary>
         public bool IsVisible;
+
+        /// <summary>
+        /// Flags if the tile is collidable
+        /// </summary>
         public bool IsCollidable;
 
+        /// <summary>
+        /// The SAT collision shape
+        /// </summary>
         public SATShape CollidableShape;
 
-        // Debug
-        public Rectangle BoundingBox
-        {
-            get
-            {
-                return CollidableShape.Rectangle;
-            }
-        }
+        protected Point size;
         #endregion
 
         #region Constructor

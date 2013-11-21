@@ -242,7 +242,7 @@ namespace MonoMinion.IsoCubeEngine
                         {
                             // Draw Tile
                             Minion.Instance.SpriteBatch.Draw(
-                                Tilesheet.SpriteSheet,                      // Texture
+                                Tilesheet.Spritesheet,                      // Texture
                                 Grid[x][y][z].Position,                     // Position
                                 Tilesheet.Tiles[Grid[x][y][z].BaseTile],    // Source Rect
                                 Grid[x][y][z].Tint,                         // Color

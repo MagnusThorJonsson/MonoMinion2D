@@ -44,7 +44,19 @@ namespace MonoMinion.TileEngine
         public int TileHeight { get { return _tileHeight; } }
         #endregion
 
-        public TileMap(string name, int mWidth, int mHeight, int tWidth, int tHeight, int layers, Texture2D background)
+        
+        #region Constructors
+        /// <summary>
+        /// Creates a tilemap
+        /// </summary>
+        /// <param name="name">The name of the map</param>
+        /// <param name="mWidth">The width of the map in tiles</param>
+        /// <param name="mHeight">The height of the map in tiles</param>
+        /// <param name="tWidth">The base tile width</param>
+        /// <param name="tHeight">The base tile height</param>
+        /// <param name="layers">The number of layers</param>
+        /// <param name="background">The background texture if any (defaults to null)</param>
+        public TileMap(string name, int mWidth, int mHeight, int tWidth, int tHeight, int layers, Texture2D background = null)
         {
             this.name = name;
             _mapWidth = mWidth;
@@ -57,6 +69,8 @@ namespace MonoMinion.TileEngine
 
             Culling = new MapCulling(0, mHeight - 1, 0, mWidth - 1);
         }
+        #endregion
+
 
         #region Map Layer Helpers
         /// <summary>
@@ -170,7 +184,25 @@ namespace MonoMinion.TileEngine
         }
         #endregion
 
-        #region Tile Position Helpers
+
+        #region Tile Helpers
+        /// <summary>
+        /// Adds a tile to a specific layer
+        /// </summary>
+        /// <param name="layer">The layer to add to</param>
+        /// <param name="tile">The tile to add</param>
+        /// <param name="x">The tile position on the X axis</param>
+        /// <param name="y">The tile position on the Y axis</param>
+        /// <returns></returns>
+        public bool AddTile(int layer, Tile tile, int x, int y)
+        {
+            if (layer > layers.Length - 1)
+                return false;
+
+            return layers[layer].AddTile(tile, x, y);
+        }
+
+
         /// <summary>
         /// Gets the list position of the tile that corrolates to the world location vector passed in
         /// </summary>
@@ -225,6 +257,10 @@ namespace MonoMinion.TileEngine
         #endregion
 
         #region Update & Draw
+        /// <summary>
+        /// Updates the Tile Map
+        /// </summary>
+        /// <param name="gameTime">The current gametime object</param>
         public virtual void Update(GameTime gameTime)
         {
             for (int i = 0; i < layers.Length; i++)
@@ -268,7 +304,7 @@ namespace MonoMinion.TileEngine
                                 // TODO: Fix position (remove calculation per frame)
                                 // Draw Tile
                                 Minion.Instance.SpriteBatch.Draw(
-                                    layers[l].TileSheet.SpriteSheet,                            // Texture
+                                    layers[l].TileSheet.Spritesheet,                            // Texture
                                     new Vector2(x * _tileWidth, y * _tileHeight),               // Position
                                     layers[l].TileSheet.Tiles[layers[l].Grid[x][y].BaseTile],   // Source Rect
                                     layers[l].Grid[x][y].Tint,                                  // Color
