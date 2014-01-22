@@ -26,6 +26,11 @@ namespace MonoMinion.TileEngine
     /// </summary>
     public class TileMap
     {
+        public static readonly int BITWISE_TOP = 1;
+        public static readonly int BITWISE_RIGHT = 2;
+        public static readonly int BITWISE_BOTTOM = 4;
+        public static readonly int BITWISE_LEFT = 8;
+
         protected string name;
         public string Name { get { return name; } }
         protected MapLayer[] layers;
@@ -204,7 +209,7 @@ namespace MonoMinion.TileEngine
 
 
         /// <summary>
-        /// Gets the list position of the tile that corrolates to the world location vector passed in
+        /// Gets the position index for the tile that corrolates to the world location vector passed in
         /// </summary>
         /// <param name="position">World location position vector</param>
         /// <returns>Point that contains the position of the tile found at the position vector</returns>
@@ -224,7 +229,7 @@ namespace MonoMinion.TileEngine
         }
 
         /// <summary>
-        /// Gets the list position of the tile that corrolates to the world location vector passed in
+        /// Gets the tile that corrolates to the world location vector passed in
         /// </summary>
         /// <param name="layer">The index of the layer in the Layers array to get the tile from</param>
         /// <param name="position">World location position vector</param>
@@ -239,7 +244,7 @@ namespace MonoMinion.TileEngine
 
 
         /// <summary>
-        /// Gets the list position of the tile that corrolates to the world location vector passed in
+        /// Gets the tile that corrolates to the world location vector passed in
         /// </summary>
         /// <param name="layer">The name of the layer to get the tile from</param>
         /// <param name="position">World location position vector</param>
@@ -255,6 +260,7 @@ namespace MonoMinion.TileEngine
             return null;
         }
         #endregion
+
 
         #region Update & Draw
         /// <summary>

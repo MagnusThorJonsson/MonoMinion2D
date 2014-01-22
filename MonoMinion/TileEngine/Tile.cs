@@ -21,7 +21,7 @@ namespace MonoMinion.TileEngine
     /// </summary>
     public class Tile
     {
-        #region Variables
+        #region Variables & Properties
         /// <summary>
         /// The tile position in the TileMap array
         /// </summary>
@@ -67,7 +67,7 @@ namespace MonoMinion.TileEngine
 
         #region Constructor
         /// <summary>
-        /// Tile constructor
+        /// Tile constructor with a square collision shape
         /// </summary>
         /// <param name="tile">Tilesheet position id</param>
         /// <param name="x">Position X</param>
@@ -92,6 +92,30 @@ namespace MonoMinion.TileEngine
             shape[2] = new Vector2(tw, th);
             shape[3] = new Vector2(0, th);
             CollidableShape.SetShape(shape);
+            CollidableShape.Position = new Vector2(x * tw, y * th);
+        }
+
+        /// <summary>
+        /// Tile constructor with a custom collision shape
+        /// </summary>
+        /// <param name="tile">Tilesheet position id</param>
+        /// <param name="x">Position X</param>
+        /// <param name="y">Position Y</param>
+        /// <param name="tw">Tile Width</param>
+        /// <param name="th">Tile Height</param>
+        /// <param name="shape">Custom SAT collision shape</param>
+        public Tile(int tile, int x, int y, int tw, int th, SATShape shape)
+        {
+            BaseTile = tile;
+
+            position = new Point(x, y);
+            size = new Point(tw, th);
+
+            Tint = Color.White;
+            IsVisible = true;
+            IsCollidable = true;
+
+            CollidableShape = shape;
             CollidableShape.Position = new Vector2(x * tw, y * th);
         }
         #endregion

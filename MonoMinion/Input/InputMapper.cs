@@ -164,7 +164,7 @@ namespace MonoMinion.Input
                 // Make sure the key hasn't already been applied
                 foreach (KeyValuePair<string, InputAction> a in actions)
                 {
-                    if ((a.Value.Key & key) != 0)
+                    if (a.Value.Key == key)
                         return false;
                 }
 
@@ -189,7 +189,7 @@ namespace MonoMinion.Input
                 // Make sure the key or button hasn't already been applied
                 foreach (KeyValuePair<string, InputAction> a in actions)
                 {
-                    if ((a.Value.Key & key) != 0 || (a.Value.Button & button) != 0)
+                    if (a.Value.Key == key || a.Value.Button == button)
                         return false;
                 }
 
@@ -376,7 +376,7 @@ namespace MonoMinion.Input
         /// <returns>The button state</returns>
         public InputButtonState getActionStateKB(string action)
         {
-            return getActionState(action, InputDeviceType.GamePad);
+            return getActionState(action, InputDeviceType.Keyboard);
         }
 #endif
 

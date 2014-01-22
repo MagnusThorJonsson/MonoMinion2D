@@ -31,9 +31,23 @@ namespace MonoMinion.Graphics
             return tilesheets[name];
         }
 
+        /// <summary>
+        /// Loads a tilesheet from an mts file
+        /// </summary>
+        /// <param name="path">The path to the file</param>
+        /// <param name="filename">The name of the tilesheet asset</param>
+        /// <returns>The tilesheet that was loaded</returns>
+        public static TileSheet Load(string path, string filename)
+        {
+            // Load wall tiles
+            using (XmlReader reader = XmlReader.Create(path + filename))
+            {
+                return TileSheetManager.Load(path, XDocument.Load(reader));
+            }
+        }
 
         /// <summary>
-        /// Loads a tilesheet from a mts file
+        /// Loads a tilesheet from an mts file
         /// </summary>
         /// <param name="path">The path to the file</param>
         /// <param name="tilesetXml">The tileset XML document</param>
@@ -42,12 +56,17 @@ namespace MonoMinion.Graphics
         {
             try
             {
+                // If by some reason the path is prepended with Content\ we trim it
+                if (path.StartsWith("Content\\"))
+                    path = path.Remove(0, "Content\\".Length);
+
                 // Loads the file and creates the parser
                 XElement tileset = tilesetXml.Element("tileset");
                 TileSheet sheet = new TileSheet(
                     tileset.Attribute("name").Value,
-                    Minion.Instance.Content.Load<Texture2D>(path + "\\" + tileset.Attribute("texture").Value)
+                    Minion.Instance.Content.Load<Texture2D>(path + tileset.Attribute("texture").Value)
                 );
+                tilesheets.Add(tileset.Attribute("texture").Value, sheet);
 
                 // Extract tile size
                 int tWidth = int.Parse(tileset.Attribute("tilewidth").Value);
@@ -58,12 +77,15 @@ namespace MonoMinion.Graphics
                 {
                     foreach (XElement tile in tilegroup.Elements("tile"))
                     {
+                        int w = int.Parse(tile.Attribute("x").Value);
+                        int h = int.Parse(tile.Attribute("y").Value);
+
                         sheet.AddTile(
                             tile.Attribute("name").Value,
                             tilegroup.Attribute("name").Value,
                             new Rectangle(
-                                int.Parse(tile.Attribute("x").Value) * tWidth,
-                                int.Parse(tile.Attribute("y").Value) * tWidth,
+                                w * tWidth,
+                                h * tHeight,
                                 tWidth,
                                 tHeight
                             )

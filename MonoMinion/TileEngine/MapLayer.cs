@@ -18,7 +18,10 @@ namespace MonoMinion.TileEngine
         public bool IsVisible;
         public float Depth;
 
+        public int TileWidth { get { return tileWidth; } }
         protected int tileWidth;
+
+        public int TileHeight { get { return tileHeight; } }
         protected int tileHeight;
 
         // Events
@@ -87,6 +90,7 @@ namespace MonoMinion.TileEngine
 
             return false;
         }
+
         /// <summary>
         /// Attempts to create a tile at a specific index using a random tile from the specified group
         /// </summary>
@@ -108,6 +112,42 @@ namespace MonoMinion.TileEngine
 
             return false;
         }
+
+        /// <summary>
+        /// Changes the base tile for a specific grid position
+        /// </summary>
+        /// <param name="position">The position of the tile to change</param>
+        /// <param name="group">The group name to change the tile into</param>
+        /// <returns>True on success</returns>
+        public bool ChangeTile(Point position, string group)
+        {
+            if (Grid[position.X][position.Y] != null)
+            {
+                Grid[position.X][position.Y].BaseTile = _tilesheet.GetRandomFromGroup(group);
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Changes the base tile for a specific grid position
+        /// </summary>
+        /// <param name="x">The X position of the tile to change</param>
+        /// <param name="y">The Y position of the tile to change</param>
+        /// <param name="group">The group name to change the tile into</param>
+        /// <returns>True on success</returns>
+        public bool ChangeTile(int x, int y, string group)
+        {
+            if (Grid[x][y] != null)
+            {
+                Grid[x][y].BaseTile = _tilesheet.GetRandomFromGroup(group);
+                return true;
+            }
+
+            return false;
+        }
+
 
         /// <summary>
         /// Gets the tiles collidable shape
