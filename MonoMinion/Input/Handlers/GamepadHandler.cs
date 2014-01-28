@@ -23,6 +23,16 @@ namespace MonoMinion.Input.Handlers
 
         // Thumbstick
         public Vector2 RThumb { get { return currentState.ThumbSticks.Right; } }
+        public Vector2 RThumbInvertY
+        {
+            get
+            {
+                return new Vector2(
+                    currentState.ThumbSticks.Right.X,
+                    currentState.ThumbSticks.Right.Y * -1
+                );
+            }
+        }
         public Vector2 LThumb { get { return currentState.ThumbSticks.Left; } }
         public Vector2 LThumbInvertY 
         { 
