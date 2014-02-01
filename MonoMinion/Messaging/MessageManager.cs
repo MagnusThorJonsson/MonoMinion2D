@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 
 namespace MonoMinion.Messaging
@@ -27,7 +28,7 @@ namespace MonoMinion.Messaging
         /// <summary>
         /// The message payload information
         /// </summary>
-        public object Payload;
+        public IMessagePayload Payload;
         #endregion
 
 
@@ -39,7 +40,7 @@ namespace MonoMinion.Messaging
         /// <param name="sender">The message sender</param>
         /// <param name="destination">The message receiver</param>
         /// <param name="payload">The message data payload</param>
-        public Message(string type, object sender, object destination, object payload)
+        public Message(string type, object sender, object destination, IMessagePayload payload)
         {
             Type = type;
             Sender = sender;
@@ -50,15 +51,14 @@ namespace MonoMinion.Messaging
     }
 
 
-    // TODO: Make it static?
     /// <summary>
-    /// Messaging Manager.
+    /// Messaging Manager component.
     /// Messaging system main handler, double buffered for your safety.
     /// 
     /// Based on code found on:
     ///     http://astroboid.com/2011/04/messaging-systems-for-games-and-xna.html
     /// </summary>
-    public class MessageManager
+    public class MessageManager : GameComponent
     {
         #region Variables 
         private List<Message> lastFrameMessages;
@@ -70,7 +70,8 @@ namespace MonoMinion.Messaging
         /// <summary>
         /// Creates and initializes the message manager
         /// </summary>
-        public MessageManager()
+        public MessageManager(Game game)
+            : base(game)
         {
             lastFrameMessages = new List<Message>();
             currentFrameMessages = new List<Message>();
@@ -80,15 +81,35 @@ namespace MonoMinion.Messaging
 
         #region Main Methods
         /// <summary>
-        /// Updates the message manager (call per frame)
+        /// Updates the message manager 
         /// </summary>
-        public void Update()
+        public override void Update(GameTime gametime)
         {
             List<Message> t = lastFrameMessages;
             lastFrameMessages = currentFrameMessages;
             currentFrameMessages = t;
             currentFrameMessages.Clear();
+
+            base.Update(gametime);
         }
+
+
+        /// <summary>
+        /// Disposes the screen manager component
+        /// </summary>
+        /// <param name="disposing">True if disposing</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                lastFrameMessages.Clear();
+                currentFrameMessages.Clear();
+            }
+
+            base.Dispose(disposing);
+        }
+        #endregion
+
 
         /// <summary>
         /// Sends a message
@@ -97,9 +118,7 @@ namespace MonoMinion.Messaging
         public void Send(Message message)
         {
             currentFrameMessages.Add(message);
-        }
-        #endregion
-
+        }        
 
         /// <summary>
         /// Searches for messages based on the criteria inputted

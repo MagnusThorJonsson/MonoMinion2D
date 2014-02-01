@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.GamerServices;
 
 using MonoMinion.Input.Handlers;
 using MonoMinion.Components;
+using MonoMinion.Messaging;
 #endregion
 
 namespace MonoMinion
@@ -33,34 +34,23 @@ namespace MonoMinion
         /// <summary>
         /// The GUI font
         /// </summary>
-        public SpriteFont FontGui
-        {
-            get
-            {
-                return this.fontGui;
-            }
-        }
+        public SpriteFont FontGui { get { return this.fontGui; } }
         protected SpriteFont fontGui;
         
         /// <summary>
         /// The SpriteBatch
         /// </summary>
-        public SpriteBatch SpriteBatch
-        {
-            get
-            {
-                return this.spriteBatch;
-            }
-        }
+        public SpriteBatch SpriteBatch { get { return this.spriteBatch; } }
         protected SpriteBatch spriteBatch;
         
         protected GameScreen startScreen;
-        public GameManager GameManager { get; set; }
+        public GameManager GameManager { get; internal set; }
         public TimerManager TimerManager { get; internal set; }
+        public MessageManager MessageManager { get; internal set; }
 
 #if !XBOX
-        public KeyboardHandler InputHandler { get; set; }
-        public MouseHandler MouseHandler { get; set; }
+        public KeyboardHandler InputHandler { get; internal set; }
+        public MouseHandler MouseHandler { get; internal set; }
 #endif
         
         /// <summary>
@@ -100,6 +90,7 @@ namespace MonoMinion
             // Add and initialize game components
             this.Components.Add(this.GameManager = new GameManager(this));
             this.Components.Add(this.TimerManager = new TimerManager(this));
+            this.Components.Add(this.MessageManager = new MessageManager(this));
 #if !XBOX
             this.Components.Add(this.MouseHandler = new MouseHandler(this));
             this.Components.Add(this.InputHandler = new KeyboardHandler(this));
