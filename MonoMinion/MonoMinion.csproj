@@ -53,6 +53,7 @@
     <Compile Include="IsoCubeEngine\CubeScenery.cs" />
     <Compile Include="IsoCubeEngine\MapCube.cs" />
     <Compile Include="IsoCubeEngine\SceneryCube.cs" />
+    <Compile Include="Messaging\MessageManager.cs" />
     <Compile Include="Minion.cs" />
     <Compile Include="Graphics\Camera2D.cs" />
     <Compile Include="Graphics\SpriteSheet.cs" />
