@@ -106,7 +106,7 @@ namespace MonoMinion.Messaging
         /// </summary>
         /// <param name="criteria">The criteria</param>
         /// <param name="result">The reference to the list object</param>
-        public void FindMessage(Predicate<Message> criteria, ref List<Message> result)
+        public void FindMessage(Predicate<Message> criteria, List<Message> result)
         {
             for (int i = 0; i < lastFrameMessages.Count; i++)
             {
@@ -123,7 +123,7 @@ namespace MonoMinion.Messaging
         /// </summary>
         /// <param name="destination">The destination object</param>
         /// <param name="result">The reference to the list object</param>
-        public void FindMessagesByDestination(object destination, ref List<Message> result)
+        public void FindMessagesByDestination(object destination, List<Message> result)
         {
             for (var i = 0; i < lastFrameMessages.Count; i++)
             {
@@ -140,7 +140,7 @@ namespace MonoMinion.Messaging
         /// </summary>
         /// <param name="sender">The sender object</param>
         /// <param name="destination">The destination object</param>
-        public void FindMessagesBySender(Object sender, ref List<Message> result)
+        public void FindMessagesBySender(Object sender, List<Message> result)
         {
             for (var i = 0; i < lastFrameMessages.Count; i++)
             {
@@ -158,7 +158,7 @@ namespace MonoMinion.Messaging
         /// </summary>
         /// <param name="type">The type of message</param>
         /// <param name="result">The reference to the list object</param>
-        public void FindMessagesByType(string type, ref List<Message> result)
+        public void FindMessagesByType(string type, List<Message> result)
         {
             for (var i = 0; i < lastFrameMessages.Count; i++)
             {
@@ -176,9 +176,9 @@ namespace MonoMinion.Messaging
         /// <param name="type">The type of message</param>
         /// <param name="destination">The destination object</param>
         /// <param name="result">The reference to the list object</param>
-        public void FindMessagesByTypeAndDestination(string type, object destination, ref List<Message> result)
+        public void FindMessagesByTypeAndDestination(string type, object destination, List<Message> result)
         {
-            FindMessage(type, destination, lastFrameMessages, ref result);
+            FindMessage(type, destination, lastFrameMessages, result);
         }
 
 
@@ -188,7 +188,7 @@ namespace MonoMinion.Messaging
         /// <param name="type">The type of message</param>
         /// <param name="sender">The sender object</param>
         /// <param name="result">The reference to the list object</param>
-        public void FindMessagesByTypeAndSender(string type, object sender, ref List<Message> result)
+        public void FindMessagesByTypeAndSender(string type, object sender, List<Message> result)
         {
             for (int i = 0; i < lastFrameMessages.Count; i++)
             {
@@ -206,9 +206,9 @@ namespace MonoMinion.Messaging
         /// <param name="type">The type of message</param>
         /// <param name="destination">The destination object</param>
         /// <param name="result">The reference to the list object</param>
-        public void FindFutureMessagesByTypeAndDestination(string type, object destination, ref List<Message> result)
+        public void FindFutureMessagesByTypeAndDestination(string type, object destination, List<Message> result)
         {
-            FindMessage(type, destination, currentFrameMessages, ref result);
+            FindMessage(type, destination, currentFrameMessages, result);
         }
 
 
@@ -221,7 +221,7 @@ namespace MonoMinion.Messaging
         /// <param name="destination"></param>
         /// <param name="frameMessages"></param>
         /// <param name="result"></param>
-        private static void FindMessage(string type, object destination, List<Message> frameMessages, ref List<Message> result)
+        private static void FindMessage(string type, object destination, List<Message> frameMessages, List<Message> result)
         {
             for (var i = 0; i < frameMessages.Count; i++)
             {
