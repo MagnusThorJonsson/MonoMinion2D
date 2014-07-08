@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using MonoMinion.Collision;
+using System.Collections.Generic;
+using MonoMinion.Helpers;
 
 namespace MonoMinion.TileEngine
 {
@@ -19,7 +21,7 @@ namespace MonoMinion.TileEngine
     /// <summary>
     /// Tile class for the TileMap
     /// </summary>
-    public class Tile
+    public class Tile : IMapNode
     {
         #region Variables & Properties
         /// <summary>
@@ -45,7 +47,12 @@ namespace MonoMinion.TileEngine
         /// <summary>
         /// The Tile color tint
         /// </summary>
-        public Color Tint;
+        public Color Tint 
+        { 
+            get { return tint; }
+            set { tint = value; }
+        }
+        protected Color tint;
 
         /// <summary>
         /// Flags if the tile is visible
@@ -55,14 +62,30 @@ namespace MonoMinion.TileEngine
         /// <summary>
         /// Flags if the tile is collidable
         /// </summary>
-        public bool IsCollidable;
+        public bool IsCollidable
+        {
+            get { return isCollidable; }
+            set { isCollidable = value; }
+        }
+        protected bool isCollidable;
 
         /// <summary>
         /// The SAT collision shape
         /// </summary>
         public SATShape CollidableShape;
 
+        /// <summary>
+        /// Used to calculate path for the A* pathfinder helper
+        /// </summary>
+        public int PathCostModifier 
+        {
+            get { return pathCostModifier; } 
+        }
+        protected int pathCostModifier;
+
         protected Point size;
+
+        protected List<Object> onTile;
         #endregion
 
         #region Constructor
@@ -93,6 +116,8 @@ namespace MonoMinion.TileEngine
             shape[3] = new Vector2(0, th);
             CollidableShape.SetShape(shape);
             CollidableShape.Position = new Vector2(x * tw, y * th);
+
+            onTile = new List<object>();
         }
 
         /// <summary>
@@ -117,6 +142,91 @@ namespace MonoMinion.TileEngine
 
             CollidableShape = shape;
             CollidableShape.Position = new Vector2(x * tw, y * th);
+
+            onTile = new List<object>();
+        }
+        #endregion
+
+        #region Methods for Objects on Tile
+        /// <summary>
+        /// Checks if a tile has any objects
+        /// </summary>
+        /// <returns>True if any objects found</returns>
+        public bool HasObject()
+        {
+            if (onTile.Count > 0)
+                return true;
+
+            return false;
+        }
+
+        /// <summary>
+        /// Adds an object to the tile
+        /// </summary>
+        /// <param name="obj">The object to add</param>
+        /// <returns>True on success</returns>
+        public bool AddObject(Object obj)
+        {
+            if (obj != null)
+            {
+                onTile.Add(obj);
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Removes an object from the tile
+        /// </summary>
+        /// <param name="index">The index of the object to remove</param>
+        /// <returns>True on success</returns>
+        public bool RemoveObject(int index)
+        {
+            if (index < onTile.Count)
+            {
+                onTile.RemoveAt(index);
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Removes an object from the tile
+        /// </summary>
+        /// <param name="obj">The object to remove from the tile</param>
+        /// <returns>True on success</returns>
+        public bool RemoveObject(Object obj)
+        {
+            if (onTile.Contains(obj))
+            {
+                return onTile.Remove(obj);
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Gets an object
+        /// </summary>
+        /// <param name="index">The index of the tile</param>
+        /// <returns>Null if no object is found</returns>
+        public Object GetObject(int index)
+        {
+            if (index < onTile.Count)
+            {
+                return onTile[index];
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets all objects
+        /// </summary>
+        /// <returns>An array of the current objects</returns>
+        public Object[] GetObjects()
+        {
+            return onTile.ToArray();
         }
         #endregion
     }

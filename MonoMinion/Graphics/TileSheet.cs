@@ -38,7 +38,7 @@ namespace MonoMinion.Graphics
         /// </summary>
         public Dictionary<string, List<int>> TileGroups;
         
-        private Random _random;
+        private static Random _random = new Random();
         #endregion
 
         /// <summary>
@@ -54,7 +54,6 @@ namespace MonoMinion.Graphics
             Tiles = new List<Rectangle>();
             TileKeys = new Dictionary<string, int>();
             TileGroups = new Dictionary<string, List<int>>();
-            _random = new Random();
         }
 
         /// <summary>
@@ -117,7 +116,7 @@ namespace MonoMinion.Graphics
         /// <returns>A tile index</returns>
         public int GetRandomFromGroup(string group)
         {
-            return TileGroups[group][_random.Next(0, TileGroups[group].Count - 1)];
+            return TileGroups[group][_random.Next(0, TileGroups[group].Count)];
         }
     }
 }

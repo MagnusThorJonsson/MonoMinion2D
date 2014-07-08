@@ -109,7 +109,7 @@ namespace MonoMinion.Graphics
         /// </summary>
         /// <param name="position">Screen vector to change to world position</param>
         /// <returns>A vector containing the world position</returns>
-        public Vector2 GetScreenPosition(Vector2 position)
+        public Vector2 GetWorldPosition(Vector2 position)
         {
             return Vector2.Transform(position, Matrix.Invert(this.transform));
         }
@@ -119,7 +119,7 @@ namespace MonoMinion.Graphics
         /// </summary>
         /// <param name="position">Screen rectangle to change to world position</param>
         /// <returns>A rectangle containing the world position</returns>
-        public Rectangle GetScreenPositionRect(Rectangle position)
+        public Rectangle GetWorldPositionRect(Rectangle position)
         {
             Vector2 worldPos = Vector2.Transform(new Vector2(position.X, position.Y), Matrix.Invert(this.transform));
             cacheRect.X = (int)worldPos.X;
@@ -135,7 +135,7 @@ namespace MonoMinion.Graphics
         /// </summary>
         /// <param name="position">The vector to change to local position</param>
         /// <returns>The local position vector</returns>
-        public Vector2 GetLocalPosition(Vector2 position)
+        public Vector2 GetScreenPosition(Vector2 position)
         {
             return Vector2.Transform(position, this.transform);
         }

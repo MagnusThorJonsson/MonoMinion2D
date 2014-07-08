@@ -53,6 +53,9 @@ namespace MonoMinion.GUI.Controls
 #if !XBOX
             if (KeyboardHandler.KeyReleased(Keys.Enter))
                 base.OnSelected(null);
+
+            if (MouseHandler.IsMouseUp(MouseHandler.Buttons.Left) && BoundingBox.Intersects(MouseHandler.PositionRect))
+                base.OnSelected(null);
 #endif
         }
     }

@@ -1,6 +1,7 @@
 ﻿using MonoMinion.Graphics;
 using MonoMinion.Collision;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace MonoMinion.TileEngine
 {
@@ -40,11 +41,12 @@ namespace MonoMinion.TileEngine
         {
             _name = name;
 
-            // Prepare tile grid
+            // Prepare tile grid 
             Grid = new Tile[mWidth][];
             for (int i = 0; i < mWidth; i++)
+            {
                 Grid[i] = new Tile[mHeight];
-
+            }
             Depth = depth;
             _tilesheet = tilesheet;
             IsVisible = true;
@@ -53,6 +55,7 @@ namespace MonoMinion.TileEngine
             tileHeight = tHeight;
         }
 
+        #region Tile Methods
         /// <summary>
         /// Attempts to add a tile at a specific index
         /// </summary>
@@ -164,6 +167,7 @@ namespace MonoMinion.TileEngine
 
             return null;
         }
+        #endregion
 
 
         public virtual void Update(GameTime gameTime)

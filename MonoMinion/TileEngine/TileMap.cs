@@ -24,7 +24,7 @@ namespace MonoMinion.TileEngine
     /// <summary>
     /// Main class for the Tile Engine the Tile Map is used to contain and render map data
     /// </summary>
-    public class TileMap
+    public class TileMap 
     {
         public static readonly int BITWISE_TOP = 1;
         public static readonly int BITWISE_RIGHT = 2;
@@ -38,15 +38,15 @@ namespace MonoMinion.TileEngine
         public Texture2D Background;
 
         #region Map Size variables
-        private int _mapWidth;
-        public int MapWidth { get { return _mapWidth; } }
-        private int _mapHeight;
-        public int MapHeight { get { return _mapHeight; } }
+        protected int mapWidth;
+        public int MapWidth { get { return mapWidth; } }
+        protected int mapHeight;
+        public int MapHeight { get { return mapHeight; } }
 
-        private int _tileWidth;
-        public int TileWidth { get { return _tileWidth; } }
-        private int _tileHeight;
-        public int TileHeight { get { return _tileHeight; } }
+        protected int tileWidth;
+        public int TileWidth { get { return tileWidth; } }
+        protected int tileHeight;
+        public int TileHeight { get { return tileHeight; } }
         #endregion
 
         
@@ -64,10 +64,10 @@ namespace MonoMinion.TileEngine
         public TileMap(string name, int mWidth, int mHeight, int tWidth, int tHeight, int layers, Texture2D background = null)
         {
             this.name = name;
-            _mapWidth = mWidth;
-            _mapHeight = mHeight;
-            _tileWidth = tWidth;
-            _tileHeight = tHeight;
+            mapWidth = mWidth;
+            mapHeight = mHeight;
+            tileWidth = tWidth;
+            tileHeight = tHeight;
 
             this.layers = new MapLayer[layers];
             Background = background;
@@ -123,7 +123,7 @@ namespace MonoMinion.TileEngine
         {
             if (layers[index] == null)
             {
-                layers[index] = new MapLayer(name, _mapWidth, _mapHeight, _tileWidth, _tileHeight, depth, tilesheet);
+                layers[index] = new MapLayer(name, mapWidth, mapHeight, tileWidth, tileHeight, depth, tilesheet);
                 return true;
             }
 
@@ -161,7 +161,7 @@ namespace MonoMinion.TileEngine
             {
                 if (layers[i] == null)
                 {
-                    layers[i] = new MapLayer(name, _mapWidth, _mapHeight, _tileWidth, _tileHeight, depth, tilesheet);
+                    layers[i] = new MapLayer(name, mapWidth, mapHeight, tileWidth, tileHeight, depth, tilesheet);
                     return true;
                 }
             }
@@ -216,17 +216,33 @@ namespace MonoMinion.TileEngine
         public Point GetTilePosition(Vector2 position)
         {
             Point pos = new Point(
-                (int)(position.X / this._tileWidth),
-                (int)(position.Y / this._tileHeight)
+                (int)(position.X / this.tileWidth),
+                (int)(position.Y / this.tileHeight)
             );
 
             if (pos.X < 0) pos.X = 0;
-            if (pos.X > _mapWidth - 1) pos.X = _mapWidth - 1;
+            if (pos.X > mapWidth - 1) pos.X = mapWidth - 1;
             if (pos.Y < 0) pos.Y = 0;
-            if (pos.Y > _mapHeight - 1) pos.Y = _mapHeight - 1;
+            if (pos.Y > mapHeight - 1) pos.Y = mapHeight - 1;
 
             return pos;
         }
+
+        /// <summary>
+        /// Gets the tile that corrolates to the map grid indexes passed in
+        /// </summary>
+        /// <param name="layer">The index of the layer in the Layers array to get the tile from</param>
+        /// <param name="x">The grid X index</param>
+        /// <param name="y">The grid Y index</param>
+        /// <returns>The tile at the given world position</returns>
+        public Tile GetTile(int layer, int x, int y)
+        {
+            if (layer < layers.Length && x < layers[layer].Grid.Length && y < layers[layer].Grid[x].Length)
+                return layers[layer].Grid[x][y];
+
+            return null;
+        }
+
 
         /// <summary>
         /// Gets the tile that corrolates to the world location vector passed in
@@ -237,7 +253,7 @@ namespace MonoMinion.TileEngine
         public Tile GetTile(int layer, Vector2 position)
         {
             if (layer < layers.Length)
-                return layers[layer].Grid[(int)Math.Floor(position.X / this._tileWidth)][(int)Math.Floor(position.Y / this._tileHeight)];
+                return layers[layer].Grid[(int)Math.Floor(position.X / this.tileWidth)][(int)Math.Floor(position.Y / this.tileHeight)];
 
             return null;
         }
@@ -254,12 +270,131 @@ namespace MonoMinion.TileEngine
             for (int i = 0; i < layers.Length; i++)
             {
                 if (layers[i].Name == layer)
-                    return layers[i].Grid[(int)Math.Floor(position.X / this._tileWidth)][(int)Math.Floor(position.Y / this._tileHeight)];
+                    return layers[i].Grid[(int)Math.Floor(position.X / this.tileWidth)][(int)Math.Floor(position.Y / this.tileHeight)];
             }
 
             return null;
         }
         #endregion
+
+
+        #region Object Helpers
+        /// <summary>
+        /// Checks if tile has any objects
+        /// </summary>
+        /// <param name="layer">The layer to check</param>
+        /// <param name="x">The X axis position</param>
+        /// <param name="y">The Y axis position</param>
+        /// <returns>Return true if any objects are found</returns>
+        public bool HasObject(int layer, int x, int y)
+        {
+            if (layer < layers.Length && x < layers[layer].Grid.Length && y < layers[layer].Grid[x].Length)
+            {
+                return layers[layer].Grid[x][y].HasObject();
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Adds a object to a specific layer
+        /// </summary>
+        /// <param name="layer">The layer to add to</param>
+        /// <param name="obj">The object to add</param>
+        /// <param name="x">The tile position on the X axis</param>
+        /// <param name="y">The tile position on the Y axis</param>
+        /// <returns>True on success</returns>
+        public bool AddObject(int layer, Object obj, int x, int y)
+        {
+            if (layer >= layers.Length || layers[layer].Grid[x][y] == null)
+                return false;
+
+            return layers[layer].Grid[x][y].AddObject(obj);
+        }
+
+        /// <summary>
+        /// Adds a object to a specific layer
+        /// </summary>
+        /// <param name="layer">The layer to add to</param>
+        /// <param name="obj">The object to add</param>
+        /// <param name="position">The world position of the object</param>
+        /// <returns>True on success</returns>
+        public bool AddObject(int layer, Object obj, Vector2 position)
+        {
+            int x = (int)Math.Floor(position.X / this.tileWidth);
+            int y = (int)Math.Floor(position.Y / this.tileHeight);
+
+            if (layer >= layers.Length || layers[layer].Grid[x][y] == null)
+                return false;
+
+            return layers[layer].Grid[x][y].AddObject(obj);
+        }
+
+
+        /// <summary>
+        /// Gets the objects on a specific tile
+        /// </summary>
+        /// <param name="layer">The index of the layer in the Layers array to get the objects from</param>
+        /// <param name="x">The tile position on the X axis</param>
+        /// <param name="y">The tile position on the Y axis</param>
+        /// <returns>The array of objects at the given world position</returns>
+        public Object[] GetObjects(int layer, int x, int y)
+        {
+            if (layer < layers.Length)
+                return layers[layer].Grid[x][y].GetObjects();
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the object on a specific tile
+        /// </summary>
+        /// <param name="layer">The index of the layer in the Layers array to get the objects from</param>
+        /// <param name="x">The tile position on the X axis</param>
+        /// <param name="y">The tile position on the Y axis</param>
+        /// <param name="index">The index of the object to get</param>
+        /// <returns>The array of objects at the given world position</returns>
+        public Object GetObject(int layer, int x, int y, int index)
+        {
+            if (layer < layers.Length)
+                return layers[layer].Grid[x][y].GetObject(index);
+
+            return null;
+        }
+
+        /// <summary>
+        /// Removes an object from a tile
+        /// </summary>
+        /// <param name="layer">The layer index</param>
+        /// <param name="x">The tile position on the X axis</param>
+        /// <param name="y">The tile position on the Y axis</param>
+        /// <param name="obj">The object to remove</param>
+        /// <returns>True on success</returns>
+        public bool RemoveObject(int layer, int x, int y, Object obj)
+        {
+            if (layer < layers.Length)
+                return layers[layer].Grid[x][y].RemoveObject(obj);
+
+            return false;
+        }
+
+        /// <summary>
+        /// Removes an object from a tile
+        /// </summary>
+        /// <param name="layer">The layer index</param>
+        /// <param name="x">The tile position on the X axis</param>
+        /// <param name="y">The tile position on the Y axis</param>
+        /// <param name="index">The index of the object to remove</param>
+        /// <returns>True on success</returns>
+        public bool RemoveObject(int layer, int x, int y, int index)
+        {
+            if (layer < layers.Length)
+                return layers[layer].Grid[x / this.tileWidth][y / this.tileHeight].RemoveObject(index);
+
+            return false;
+        }
+        #endregion
+
 
 
         #region Update & Draw
@@ -285,7 +420,7 @@ namespace MonoMinion.TileEngine
             if (Background != null)
                 Minion.Instance.SpriteBatch.Draw(
                     Background,
-                    new Rectangle(0, 0, (_mapWidth * _tileWidth), (_mapHeight * _tileWidth)),
+                    new Rectangle(0, 0, (mapWidth * tileWidth), (mapHeight * tileWidth)),
                     null,
                     Color.White,
                     0f,
@@ -311,7 +446,7 @@ namespace MonoMinion.TileEngine
                                 // Draw Tile
                                 Minion.Instance.SpriteBatch.Draw(
                                     layers[l].TileSheet.Spritesheet,                            // Texture
-                                    new Vector2(x * _tileWidth, y * _tileHeight),               // Position
+                                    new Vector2(x * tileWidth, y * tileHeight),                 // Position
                                     layers[l].TileSheet.Tiles[layers[l].Grid[x][y].BaseTile],   // Source Rect
                                     layers[l].Grid[x][y].Tint,                                  // Color
                                     0,                                                          // Rotation

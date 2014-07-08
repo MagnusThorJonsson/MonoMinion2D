@@ -28,6 +28,7 @@ namespace MonoMinion.Graphics.Sprites
         public bool IsVisible;
         public Vector2 Position;
         public Vector2 Origin;
+        public Vector2 Offset;
         public float Rotation;
         public float Scale;
         public float Depth;
@@ -58,6 +59,7 @@ namespace MonoMinion.Graphics.Sprites
 
             Position = Vector2.Zero;
             Origin = Vector2.Zero;
+            Offset = Vector2.Zero;
             Rotation = 0f;
             Scale = 1f;
             Depth = 0.5f;
@@ -168,7 +170,7 @@ namespace MonoMinion.Graphics.Sprites
                         null,
                         Tint,
                         Rotation,
-                        Origin,
+                        Origin + Offset,
                         Scale,
                         SpriteEffect,
                         Depth
@@ -182,7 +184,7 @@ namespace MonoMinion.Graphics.Sprites
                         currentAnimation.CurrentFrame,
                         Tint,
                         Rotation,
-                        Origin,
+                        Origin + Offset,
                         Scale,
                         SpriteEffect,
                         Depth

@@ -43,7 +43,7 @@ namespace MonoMinion.Helpers
     /// </summary>
     public interface IMapNode
     {
-        bool IsPassable { get; set; }
+        bool IsCollidable { get; set; }
         Color Tint { get; set; }
         int PathCostModifier { get; }
         //void SetColor(Color c);
@@ -56,7 +56,7 @@ namespace MonoMinion.Helpers
     /// </summary>
     public class PathfinderHelper
     {
-        private IMapNode[,] _tiles;
+        private IMapNode[][] _tiles;
         private Heuristics _heuristicsType;
         private int _maxClosedNodes = 512;
 
@@ -66,7 +66,7 @@ namespace MonoMinion.Helpers
         /// <param name="nodes">Node map to use as a base</param>
         /// <param name="type">Heuristics type used in the A* algorithm</param>
         /// <param name="maxNodes">Maximum amount of nodes allowed before the pathfinder gives up (resolves deadlocking)</param>
-        public PathfinderHelper(IMapNode[,] nodes, Heuristics type = Heuristics.Manhattan, int maxNodes = 512)
+        public PathfinderHelper(IMapNode[][] nodes, Heuristics type = Heuristics.Manhattan, int maxNodes = 512)
         {
             // Set Map nodes - aka whatever your map is 
             _tiles = nodes;
@@ -79,7 +79,7 @@ namespace MonoMinion.Helpers
         /// Updates the nodemap used by the pathfinder
         /// </summary>
         /// <param name="nodes">Node map</param>
-        public void UpdateNodes(IMapNode[,] nodes)
+        public void UpdateNodes(IMapNode[][] nodes)
         {
             this._tiles = nodes;
         }
@@ -99,7 +99,7 @@ namespace MonoMinion.Helpers
             int startTime = Environment.TickCount;
 #endif
             // Create open and closed lists
-            PathNodeBinaryHeap openList = new PathNodeBinaryHeap(_tiles.GetLength(0), _tiles.GetLength(1));
+            PathNodeBinaryHeap openList = new PathNodeBinaryHeap(_tiles.Length, _tiles[0].Length);
             List<PathNode> closedList = new List<PathNode>();
 
             // Add first node(the starting point)
@@ -107,7 +107,7 @@ namespace MonoMinion.Helpers
             openList.AddNode(current);
 
             // Create variables to be used in loop
-            int xStart, yStart, xEnd, yEnd, width = _tiles.GetLength(0), height = _tiles.GetLength(1),
+            int xStart, yStart, xEnd, yEnd, width = _tiles.Length, height = _tiles[0].Length,
                 gCost, hCost;
 
             Point position = Point.Zero;
@@ -124,9 +124,9 @@ namespace MonoMinion.Helpers
                 for (int x = xStart; x <= xEnd; x++)
                     for (int y = yStart; y <= yEnd; y++)
                         if (!(x == current.Position.X && y == current.Position.Y))
-                            if (_tiles[x, y].IsPassable)
+                            if (!_tiles[x][y].IsCollidable)
                             {
-                                gCost = current.G + _tiles[x, y].PathCostModifier;
+                                gCost = current.G + _tiles[x][y].PathCostModifier;
                                 // If movement is diagonal give it a higher G scoring to down play diagonals as good movement choices
                                 if ((x == xStart && y == yStart) || (x == xEnd && y == xStart)
                                     || (x == xStart && y == yEnd) || (x == xEnd && y == yEnd))
@@ -161,7 +161,7 @@ namespace MonoMinion.Helpers
                                         openList.AddNode(new PathNode(position, current, gCost, hCost));
 #if DEBUG
                                         // Colour tile to show you've checked it - remove this in your actual game.
-                                        //_tiles[position.X, position.Y].Tint = Color.LightBlue;
+                                        _tiles[position.X][position.Y].Tint = Color.LightBlue;
 #endif
                                     }
                                     else
@@ -184,7 +184,7 @@ namespace MonoMinion.Helpers
                 openList.RemoveNode(current);
                 closedList.Add(current);
 #if DEBUG
-                //_tiles[current.Position.X, current.Position.Y].Tint = Color.Blue;
+                _tiles[current.Position.X][current.Position.Y].Tint = Color.Blue;
 #endif
                 // Find lowest cost square and start again on that node
                 if (openList.Count == 0)
@@ -202,7 +202,6 @@ namespace MonoMinion.Helpers
                 // taking too long
                 if (closedList.Count > _maxClosedNodes)
                     break;
-
             }
 
             // Work back through parents to find path
@@ -213,7 +212,7 @@ namespace MonoMinion.Helpers
                 current = current.Parent;
 #if DEBUG
                 // Set colour of path, remove this in your actual game
-                //_tiles[current.Position.X, current.Position.Y].Tint = Color.Green;
+                _tiles[current.Position.X][current.Position.Y].Tint = Color.Green;
 #endif
             }
 
@@ -253,13 +252,13 @@ namespace MonoMinion.Helpers
         }
         #endregion
 
-
+        #region Private Helper Methods
         /// <summary>
         /// Checks if a node is in a list by its position.
         /// </summary>
-        /// <param name="position"></param>
-        /// <param name="nodes"></param>
-        /// <returns></returns>
+        /// <param name="position">The position of the node</param>
+        /// <param name="nodes">The list of nodes to check</param>
+        /// <returns>True if found</returns>
         private bool NodeInList(Point position, List<PathNode> nodes)
         {
             foreach (PathNode node in nodes)
@@ -274,9 +273,9 @@ namespace MonoMinion.Helpers
         /// Returns node if it is in the given list by searching for its position,
         /// if it does not exist in it then it will return null.
         /// </summary>
-        /// <param name="position"></param>
-        /// <param name="nodes"></param>
-        /// <returns></returns>
+        /// <param name="position">The position of the node</param>
+        /// <param name="nodes">The list of nodes to check</param>
+        /// <returns>Null if no node was found</returns>
         private PathNode FindNodeInList(Point position, List<PathNode> nodes)
         {
             foreach (PathNode node in nodes)
@@ -287,6 +286,6 @@ namespace MonoMinion.Helpers
 
             return null;
         }
-
+        #endregion
     }
 }

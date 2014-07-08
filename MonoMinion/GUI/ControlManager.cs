@@ -162,6 +162,15 @@ namespace MonoMinion.GUI
             } while (currentControl != _selected);
             this[_selected].HasFocus = true;
         }
+
+        /// <summary>
+        /// Clears focus from all controls in this manager
+        /// </summary>
+        public void ClearFocus()
+        {
+            foreach (Control cntrl in this)
+                cntrl.HasFocus = false;
+        }
         #endregion
     }
 }
