@@ -58,8 +58,15 @@ namespace MonoMinion
         /// </summary>
         public Texture2D Texture1x1 { get { return this._texture1x1; } }
         private Texture2D _texture1x1;
+
+        /// <summary>
+        /// The default random generator
+        /// </summary>
+        public Random Random { get { return _random; } }
+        private Random _random;
         #endregion
 
+        #region Constructors
         /// <summary>
         /// Minion 2D constructor
         /// </summary>
@@ -73,8 +80,31 @@ namespace MonoMinion
             this.screenSize = screenSize;
             this.IsFixedTimeStep = true;
             Minion.Instance = this;
+
+            _random = new Random();
         }
 
+        /// <summary>
+        /// Minion 2D constructor
+        /// </summary>
+        /// <param name="screenSize">A Point representation of the initial screen size</param>
+        /// <param name="seed">The seed for the default random generator</param>
+        public Minion(Point screenSize, int seed)
+            : base()
+        {
+            this.content = Content;
+            this.graphics = new GraphicsDeviceManager(this);
+
+            this.screenSize = screenSize;
+            this.IsFixedTimeStep = true;
+            Minion.Instance = this;
+
+            _random = new Random(seed);
+        }
+        #endregion
+
+
+        #region Initialization Methods
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -128,7 +158,9 @@ namespace MonoMinion
 
             base.UnloadContent();
         }
+        #endregion
 
+        #region Update & Draw
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -147,7 +179,9 @@ namespace MonoMinion
         {
             base.Draw(gameTime);
         }
+        #endregion
 
+        #region Helper Methods
         /// <summary>
         /// Sets the background color for the screen refresh
         /// </summary>
@@ -157,5 +191,6 @@ namespace MonoMinion
             if (GameManager != null)
                 GameManager.BackgroundColor = color;
         }
+        #endregion
     }
 }

@@ -277,7 +277,7 @@ namespace MonoMinion.Collision
         /// Detects and resolves the collision between two shapes
         /// </summary>
         /// <param name="shape">The shape to test for</param>
-        /// <param name="velocity">The velocity of the moving</param>
+        /// <param name="velocity">The velocity</param>
         /// <param name="mtv">The Mininum Transfer Vector, i.e. the depth of the intersect</param>
         /// <returns>True if a collision is detected</returns>
         public bool Intersect(SATShape shape, Vector2 velocity, ref Vector2 mtv)
@@ -391,7 +391,7 @@ namespace MonoMinion.Collision
         #endregion
 
 
-        #region Static Collision Helpers
+        #region Static Protected Collision Helpers
         /// <summary>
         /// Tests if an axis seperates the passed in shape from this one.
         /// </summary>

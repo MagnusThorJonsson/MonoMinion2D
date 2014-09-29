@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace MonoMinion.Helpers
 {
@@ -11,12 +12,13 @@ namespace MonoMinion.Helpers
         /// <param name="rect">Dimension and size of the rectangle to be drawn</param>
         /// <param name="borderWidth">The border size</param>
         /// <param name="color">The color of the border</param>
-        public static void DrawRectangle(Rectangle rect, int borderWidth, Color color)
+        public static void DrawRectangle(Rectangle rect, int borderWidth, Color color, int scale)
         {
+            
             Minion.Instance.SpriteBatch.Draw(Minion.Instance.Texture1x1, new Rectangle(rect.Left, rect.Top, borderWidth, rect.Height), color); // Left
             Minion.Instance.SpriteBatch.Draw(Minion.Instance.Texture1x1, new Rectangle(rect.Right, rect.Top, borderWidth, rect.Height), color); // Right
             Minion.Instance.SpriteBatch.Draw(Minion.Instance.Texture1x1, new Rectangle(rect.Left, rect.Top, rect.Width, borderWidth), color); // Top
-            Minion.Instance.SpriteBatch.Draw(Minion.Instance.Texture1x1, new Rectangle(rect.Left, rect.Bottom, rect.Width + borderWidth, borderWidth), null, color, 0, Vector2.Zero, SpriteEffects.None, 0f); // Bottom
+            Minion.Instance.SpriteBatch.Draw(Minion.Instance.Texture1x1, new Rectangle(rect.Left, rect.Bottom, rect.Width + borderWidth, borderWidth), color); // Bottom
         }
 
         /// <summary>
@@ -42,6 +44,48 @@ namespace MonoMinion.Helpers
                 SpriteEffects.None,
                 0
             );
+        }
+
+        /// <summary>
+        /// Draws a circle
+        /// </summary>
+        /// <param name="center">The circle center position</param>
+        /// <param name="radius">The size radius of the circle</param>
+        /// <param name="segments">The number of segments in the circle</param>
+        /// <param name="borderWidth">The border size</param>
+        /// <param name="color">The color of the border</param>
+        public static void DrawCircle(Vector2 center, float radius, int segments, int borderWidth, Color color)
+        {
+
+            Vector2[] vertex = new Vector2[segments];
+
+            float increment = (float)(Math.PI * 2.0) / segments;
+            float theta = 0.0f;
+
+            for (int i = 0; i < segments; i++)
+            {
+                vertex[i] = center + radius * new Vector2((float)Math.Cos(theta), (float)Math.Sin(theta));
+                theta += increment;
+            }
+
+            DrawPolygon(vertex, color, borderWidth);
+        }
+
+        /// <summary>
+        /// Draws a polygon
+        /// </summary>
+        /// <param name="vertex">The vertex array</param>
+        /// <param name="borderWidth">The border size</param>
+        /// <param name="color">The color of the border</param>
+        public static void DrawPolygon(Vector2[] vertex, Color color, int borderWidth)
+        {
+            if (vertex.Length > 0)
+            {
+                for (int i = 0; i < vertex.Length - 1; i++)
+                    DrawLine(vertex[i], vertex[i + 1], borderWidth, color);
+
+                DrawLine(vertex[vertex.Length - 1], vertex[0], borderWidth, color);
+            }
         }
 
 

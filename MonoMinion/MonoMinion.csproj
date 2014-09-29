@@ -39,6 +39,8 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="MapGenerators\BSP\BspNode.cs" />
+    <Compile Include="MapGenerators\BSP\BspTree.cs" />
     <Compile Include="Collision\SATShape.cs" />
     <Compile Include="Components\Calendar.cs" />
     <Compile Include="Components\FrameRateCounter.cs" />
@@ -53,6 +55,7 @@
     <Compile Include="IsoCubeEngine\CubeScenery.cs" />
     <Compile Include="IsoCubeEngine\MapCube.cs" />
     <Compile Include="IsoCubeEngine\SceneryCube.cs" />
+    <Compile Include="MapGenerators\Indoor\IndoorGenerator.cs" />
     <Compile Include="Messaging\IMessagePayload.cs" />
     <Compile Include="Messaging\MessageManager.cs" />
     <Compile Include="Minion.cs" />
@@ -88,6 +91,8 @@
     <Compile Include="ScreenManager\Entity.cs" />
     <Compile Include="ScreenManager\GameManager.cs" />
     <Compile Include="ScreenManager\GameScreen.cs" />
+    <Compile Include="StateMachine\FSM.cs" />
+    <Compile Include="StateMachine\IState.cs" />
     <Compile Include="TileEngine\MapLayer.cs" />
     <Compile Include="TileEngine\Tile.cs" />
     <Compile Include="TileEngine\TileMap.cs" />

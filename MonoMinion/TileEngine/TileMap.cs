@@ -31,11 +31,20 @@ namespace MonoMinion.TileEngine
         public static readonly int BITWISE_BOTTOM = 4;
         public static readonly int BITWISE_LEFT = 8;
 
-        protected string name;
+        /// <summary>
+        /// The map name
+        /// </summary>
         public string Name { get { return name; } }
+        protected string name;
+
         protected MapLayer[] layers;
         public MapCulling Culling;
         public Texture2D Background;
+
+        /// <summary>
+        /// The number of layers
+        /// </summary>
+        public int LayerCount { get { return layers.Length; } }
 
         #region Map Size variables
         protected int mapWidth;
@@ -89,6 +98,21 @@ namespace MonoMinion.TileEngine
             {
                 if (layers[i].Name == name)
                     return layers[i];
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets a specific layer by index
+        /// </summary>
+        /// <param name="index">Layer index</param>
+        /// <returns>A MapLayer if found</returns>
+        public MapLayer GetLayer(int index)
+        {
+            if (index >= 0 && index < layers.Length)
+            {
+                return layers[index];
             }
 
             return null;
