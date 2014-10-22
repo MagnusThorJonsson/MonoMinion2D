@@ -1,4 +1,10 @@
-﻿using Microsoft.Xna.Framework;
+﻿/*
+ * BASED OFF OF
+ * - http://bigbadwofl.me/random-dungeon-generator/
+ * - http://jsfiddle.net/bigbadwaffle/YeazH/
+ */
+
+using Microsoft.Xna.Framework;
 using MonoMinion.Helpers;
 using System;
 using System.Collections.Generic;
@@ -17,6 +23,8 @@ namespace MonoMinion.MapGenerators.Indoor
         protected bool?[,] map;
         public bool?[,] Map { get { return map; } }
 
+        public int RoomCount { get { return rooms.Count; } }
+
         public IndoorGenerator(Point size, int iterations)
         {
             CONDENSE_ITERATIONS = iterations;
@@ -26,7 +34,7 @@ namespace MonoMinion.MapGenerators.Indoor
             map = new bool?[size.X, size.Y];
         }
 
-        public static IndoorGenerator GenerateMap(Point mapSize, Point roomCountRange, Point minRoomSize, Point maxRoomSize, int condenseIterations, int maxAttemptsPerRoom = 100)
+        public static IndoorGenerator GenerateMap(Point mapSize, Point roomCountRange, Point minRoomSize, Point maxRoomSize, int condenseIterations, int maxAttemptsPerRoom = 100, bool skipCorridors = false)
         {
             // Verify ranges
             if (mapSize.Equals(Point.Zero))
@@ -53,10 +61,10 @@ namespace MonoMinion.MapGenerators.Indoor
                 roomAttempts++;
 
                 Rectangle room = new Rectangle(
-                    Minion.Instance.Random.Next(1, mapSize.X - maxRoomSize.X + 1),
-                    Minion.Instance.Random.Next(1, mapSize.Y - maxRoomSize.Y + 1),
-                    Minion.Instance.Random.Next(minRoomSize.X, maxRoomSize.X + 1),
-                    Minion.Instance.Random.Next(minRoomSize.Y, maxRoomSize.Y + 1)
+                    Minion.Instance.Random.Next(1, mapSize.X - maxRoomSize.X),
+                    Minion.Instance.Random.Next(1, mapSize.Y - maxRoomSize.Y),
+                    Minion.Instance.Random.Next(minRoomSize.X, maxRoomSize.X),
+                    Minion.Instance.Random.Next(minRoomSize.Y, maxRoomSize.Y)
                 );
 
                 // If we collide we regenerate the room
@@ -87,44 +95,50 @@ namespace MonoMinion.MapGenerators.Indoor
             }
 
             
-            // TODO: Make these into a separate class instead of applying them directly to the map grid
-            // Build corridors between rooms
-            for (int i = 0; i < roomCount; i++)
+            // TODO: Make these into a separate class (or use Rectangle) instead of applying the corridors directly to the map grid
+            if (!skipCorridors)
             {
-                Rectangle closestRoom = mapGen.findClosestRoom(mapGen.rooms[i]);
-                Point pointA = new Point(
-                    Minion.Instance.Random.Next(mapGen.rooms[i].X, mapGen.rooms[i].X + mapGen.rooms[i].Width + 1),
-                    Minion.Instance.Random.Next(mapGen.rooms[i].Y, mapGen.rooms[i].Y + mapGen.rooms[i].Height + 1)
-                );
-
-                Point pointB = new Point(
-                    Minion.Instance.Random.Next(closestRoom.X, closestRoom.X + closestRoom.Width + 1),
-                    Minion.Instance.Random.Next(closestRoom.Y, closestRoom.Y + closestRoom.Height + 1)
-                );
-
-                while ((pointB.X != pointA.X) || (pointB.Y != pointA.Y))
+                // Build corridors between rooms
+                for (int i = 0; i < roomCount; i++)
                 {
-                    if (pointB.X != pointA.X)
-                    {
-                        if (pointB.X > pointA.X)
-                            pointB.X--;
-                        else
-                            pointB.X++;
-                    }
-                    else if (pointB.Y != pointA.Y)
-                    {
-                        if (pointB.Y > pointA.Y)
-                            pointB.Y--;
-                        else
-                            pointB.Y++;
-                    }
+                    Rectangle closestRoom = mapGen.findClosestRoom(mapGen.rooms[i]);
+                    if (closestRoom.Equals(Rectangle.Empty))
+                        continue;
 
-                    // Set as a floor tile
-                    mapGen.map[pointB.X, pointB.Y] = false;
+                    Point pointA = new Point(
+                        Minion.Instance.Random.Next(mapGen.rooms[i].X, mapGen.rooms[i].X + mapGen.rooms[i].Width + 1),
+                        Minion.Instance.Random.Next(mapGen.rooms[i].Y, mapGen.rooms[i].Y + mapGen.rooms[i].Height + 1)
+                    );
+
+                    Point pointB = new Point(
+                        Minion.Instance.Random.Next(closestRoom.X, closestRoom.X + closestRoom.Width + 1),
+                        Minion.Instance.Random.Next(closestRoom.Y, closestRoom.Y + closestRoom.Height + 1)
+                    );
+
+                    while ((pointB.X != pointA.X) || (pointB.Y != pointA.Y))
+                    {
+                        if (pointB.X != pointA.X)
+                        {
+                            if (pointB.X > pointA.X)
+                                pointB.X--;
+                            else
+                                pointB.X++;
+                        }
+                        else if (pointB.Y != pointA.Y)
+                        {
+                            if (pointB.Y > pointA.Y)
+                                pointB.Y--;
+                            else
+                                pointB.Y++;
+                        }
+
+                        // Set as a floor tile
+                        mapGen.map[pointB.X, pointB.Y] = false;
+                    }
                 }
             }
-            
 
+            // TODO: This is problematic and ugly as sin, fix
             // Find and set wall tiles around the rooms (NOTE THE ROOM SIZE IS ALWAYS THE WALKABLE AREA, I.E. THE SURROUNDING WALLS ARE BIGGER THAN THE ROOM MIN/MAX)
             for (int x = 0; x < mapSize.X; x++)
             {
@@ -134,10 +148,13 @@ namespace MonoMinion.MapGenerators.Indoor
                     {
                         for (int xx = x - 1; xx <= x + 1; xx++)
                         {
-                            for (int yy = y - 1; yy <= y + 1; yy++)
+                            if (xx < mapGen.map.GetLength(0))
                             {
-                                if (mapGen.map[xx, yy] == null)
-                                    mapGen.map[xx, yy] = true;
+                                for (int yy = y - 1; yy <= y + 1; yy++)
+                                {
+                                    if (yy < mapGen.map.GetLength(1) && mapGen.map[xx, yy] == null)
+                                        mapGen.map[xx, yy] = true;
+                                }
                             }
                         }
                     }
