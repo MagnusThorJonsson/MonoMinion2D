@@ -166,11 +166,11 @@ namespace MonoMinion.Graphics.Sprites
                 {
                     Minion.Instance.SpriteBatch.Draw(
                         spriteSheet.Texture,
-                        Position,
+                        Position + Offset,
                         null,
                         Tint,
                         Rotation,
-                        Origin + Offset,
+                        Origin,
                         Scale,
                         SpriteEffect,
                         Depth
@@ -180,11 +180,11 @@ namespace MonoMinion.Graphics.Sprites
                 {
                     Minion.Instance.SpriteBatch.Draw(
                         spriteSheet.Texture,
-                        Position,
+                        Position + Offset,
                         currentAnimation.CurrentFrame,
                         Tint,
                         Rotation,
-                        Origin + Offset,
+                        Origin,
                         Scale,
                         SpriteEffect,
                         Depth

@@ -477,7 +477,7 @@ namespace MonoMinion.TileEngine
                                     Vector2.Zero,                                               // Origin
                                     1f,                                                         // Scale
                                     SpriteEffects.None,                                         // Sprite Effects
-                                    layers[l].Depth                                             // Layer Depth
+                                    layers[l].Grid[x][y].Depth                                  // Layer Depth
                                 );
                             }
                         }

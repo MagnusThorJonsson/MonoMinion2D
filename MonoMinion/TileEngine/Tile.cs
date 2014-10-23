@@ -38,6 +38,12 @@ namespace MonoMinion.TileEngine
         }
         protected Point position;
 
+        /// <summary>
+        /// The tile depth
+        /// </summary>
+        public float Depth { get { return depth; } }
+        protected float depth;
+
         // Cached Values
         /// <summary>
         /// The Tile base graphic
@@ -97,7 +103,8 @@ namespace MonoMinion.TileEngine
         /// <param name="y">Position Y</param>
         /// <param name="tw">Tile Width</param>
         /// <param name="th">Tile Height</param>
-        public Tile(int tile, int x, int y, int tw, int th)
+        /// <param name="depth">Tile Drawing Depth</param>
+        public Tile(int tile, int x, int y, int tw, int th, float depth)
         {
             BaseTile = tile;
 
@@ -117,6 +124,8 @@ namespace MonoMinion.TileEngine
             CollidableShape.SetShape(shape);
             CollidableShape.Position = new Vector2(x * tw, y * th);
 
+            this.depth = depth;
+
             onTile = new List<object>();
         }
 
@@ -128,13 +137,16 @@ namespace MonoMinion.TileEngine
         /// <param name="y">Position Y</param>
         /// <param name="tw">Tile Width</param>
         /// <param name="th">Tile Height</param>
+        /// <param name="depth">Tile Drawing Depth</param>
         /// <param name="shape">Custom SAT collision shape</param>
-        public Tile(int tile, int x, int y, int tw, int th, SATShape shape)
+        public Tile(int tile, int x, int y, int tw, int th, float depth, SATShape shape)
         {
             BaseTile = tile;
 
             position = new Point(x, y);
             size = new Point(tw, th);
+
+            this.depth = depth;
 
             Tint = Color.White;
             IsVisible = true;

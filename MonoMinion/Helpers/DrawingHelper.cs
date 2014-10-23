@@ -28,7 +28,8 @@ namespace MonoMinion.Helpers
         /// <param name="to">End vector</param>
         /// <param name="borderWidth">The width of the border</param>
         /// <param name="color">Color of the line</param>
-        public static void DrawLine(Vector2 from, Vector2 to, int borderWidth, Color color)
+        /// <param name="depth">The draw depth</param>
+        public static void DrawLine(Vector2 from, Vector2 to, int borderWidth, Color color, float depth = 1f)
         {
             float angle = (float)System.Math.Atan2(to.Y - from.Y, to.X - from.X);
             float length = Vector2.Distance(from, to);
@@ -42,7 +43,7 @@ namespace MonoMinion.Helpers
                 Vector2.Zero,
                 new Vector2(length, borderWidth),
                 SpriteEffects.None,
-                0
+                depth
             );
         }
 

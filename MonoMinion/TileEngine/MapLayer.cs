@@ -87,7 +87,7 @@ namespace MonoMinion.TileEngine
         {
             if (Grid[x][y] == null)
             {
-                Grid[x][y] = new Tile(baseTile, x, y, tw, th);
+                Grid[x][y] = new Tile(baseTile, x, y, tw, th, Depth);
                 return true;
             }
 
@@ -108,7 +108,7 @@ namespace MonoMinion.TileEngine
         {
             if (Grid[x][y] == null)
             {
-                Grid[x][y] = new Tile(_tilesheet.GetRandomFromGroup(group), x, y, tw, th);
+                Grid[x][y] = new Tile(_tilesheet.GetRandomFromGroup(group), x, y, tw, th, Depth);
                 Grid[x][y].IsCollidable = isCollidable;
                 return true;
             }
