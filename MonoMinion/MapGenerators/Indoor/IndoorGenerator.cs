@@ -20,8 +20,8 @@ namespace MonoMinion.MapGenerators.Indoor
         protected Point areaSize;
         protected List<Rectangle> rooms;
         // TODO: Refactor this into an enum
-        protected bool?[,] map;
-        public bool?[,] Map { get { return map; } }
+        protected bool[,] map;
+        public bool[,] Map { get { return map; } }
 
         public int RoomCount { get { return rooms.Count; } }
 
@@ -31,7 +31,11 @@ namespace MonoMinion.MapGenerators.Indoor
 
             areaSize = size;
             rooms = new List<Rectangle>();
-            map = new bool?[size.X, size.Y];
+            map = new bool[size.X, size.Y];
+            // Fill the map with roof tiles
+            //for (int x = 0; x < map.GetLength(0); x++)
+            //    for (int y = 0; y < map.GetLength(1); y++)
+            //        map[x, y] = false;
         }
 
         public static IndoorGenerator GenerateMap(Point mapSize, Point roomCountRange, Point minRoomSize, Point maxRoomSize, int condenseIterations, int maxAttemptsPerRoom = 100, bool skipCorridors = false)
@@ -89,7 +93,7 @@ namespace MonoMinion.MapGenerators.Indoor
                 {
                     for (int y = mapGen.rooms[i].Y; y < mapGen.rooms[i].Y + mapGen.rooms[i].Height; y++)
                     {
-                        mapGen.map[x, y] = false;
+                        mapGen.map[x, y] = true;
                     }
                 }
             }
@@ -133,11 +137,12 @@ namespace MonoMinion.MapGenerators.Indoor
                         }
 
                         // Set as a floor tile
-                        mapGen.map[pointB.X, pointB.Y] = false;
+                        mapGen.map[pointB.X, pointB.Y] = true;
                     }
                 }
             }
 
+            /*
             // TODO: This is problematic and ugly as sin, fix
             // Find and set wall tiles around the rooms (NOTE THE ROOM SIZE IS ALWAYS THE WALKABLE AREA, I.E. THE SURROUNDING WALLS ARE BIGGER THAN THE ROOM MIN/MAX)
             for (int x = 0; x < mapSize.X; x++)
@@ -160,7 +165,7 @@ namespace MonoMinion.MapGenerators.Indoor
                     }
                 }
             }
-
+            */
             return mapGen;
         }
 

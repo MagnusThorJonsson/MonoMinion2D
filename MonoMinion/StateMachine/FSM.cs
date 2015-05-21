@@ -13,7 +13,13 @@ namespace MonoMinion.StateMachine
         #region Variables & Properties
         private T _owner;
         private IState<T> _globalState;
+
+        /// <summary>
+        /// Get the current state
+        /// </summary>
+        public IState<T> CurrentState { get { return _currentState; } }
         private IState<T> _currentState;
+
         private IState<T> _previousState;
         #endregion
 

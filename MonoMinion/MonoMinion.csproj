@@ -55,7 +55,10 @@
     <Compile Include="IsoCubeEngine\CubeScenery.cs" />
     <Compile Include="IsoCubeEngine\MapCube.cs" />
     <Compile Include="IsoCubeEngine\SceneryCube.cs" />
+    <Compile Include="MapGenerators\CellularAutomataGenerator.cs" />
     <Compile Include="MapGenerators\Indoor\IndoorGenerator.cs" />
+    <Compile Include="MapGenerators\MapBlueprint.cs" />
+    <Compile Include="MapGenerators\MapGenerator.cs" />
     <Compile Include="Messaging\IMessagePayload.cs" />
     <Compile Include="Messaging\MessageManager.cs" />
     <Compile Include="Minion.cs" />
